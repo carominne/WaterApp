@@ -1,4 +1,4 @@
-package com.example.waterapp;
+package com.example.android.waterapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,30 +9,40 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String LOG_TAG = MainActivity.class.getSimpleName() ;
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    public static final String USERNAME_KEY =
+            "com.example.android.twoactivities.extra.USERNAME_KEY";
+    public static final String PASSWORD_KEY =
+            "com.example.android.twoactivities.extra.PASSWORD_KEY";
+    private EditText mMainUsername;
+    private EditText mMainPassword;
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        mMainUsername = findViewById(R.id.editText_username);
+        mMainPassword = findViewById(R.id.editText_password);
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //FloatingActionButton fab = findViewById(R.id.fab);
+/*        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -56,9 +66,23 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void launchPatientActivity(View view) {
-        Log.d(LOG_TAG, "Button clicked!");
-        Intent intent = new Intent(this, PatientActivity.class);
-        startActivity(intent);
+
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    public void verifycredentials(View view) {
+        // insérer ici le code qui sert à vérifier les données d'identification entrées par l'utilisateur
+        boolean credentials;
+        credentials = false;
+        String username = mMainUsername.getText().toString();
+        String password = mMainPassword.getText().toString();
+
+        if(true){
+                   credentials=true; // vérifications des données, si c'est juste, on met credentials à 1
+                }
+        if (credentials == true){
+            Intent intent = new Intent(this, OverviewActivity.class);
+            startActivity(intent);
+        }
     }
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 }
