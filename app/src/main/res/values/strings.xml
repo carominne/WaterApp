@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">WaterApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_patient">PatientActivity</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="button_main">Next</string>
+    <string name="dehydration_level">Current Dehydration Level:</string>
+    <string name="room_number">Room number:</string>
+    <string name="gender">Gender:</string>
+    <string name="age">Age:</string>
+    <string name="birthday">Birthday</string>
+    <string name="medication">Medication:</string>
+    <string name="medical_background">Medical Background</string>
+    <string name="history">History</string>
+    <string name="patient_medication">Afebril
+    \n
+    Solitium
+    \n
+    Corona
+        \n
+        Cocuouc
+        \n
+        encor eun
+    </string>
+    <string name="patient_dehydration_level">Medium</string>
+    <string name="patient_room_number">654</string>
+    <string name="patient_gender">F</string>
+    <string name="patient_age">86</string>
+    <string name="patient_history"> chelou
+    </string>
+    <string name="patient_background">Diabetes</string>
+</resources>
