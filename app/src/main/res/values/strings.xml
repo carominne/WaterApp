@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">WaterApp</string>
     <string name="action_settings">Settings</string>
+    <!--main activity-->
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="main_password">password</string>
+    <string name="main_username">username</string>
+    <string name="main_button_text">Log In</string>
+
+
+
+    <!--patient activity-->
     <string name="title_activity_patient">PatientActivity</string>
     <string name="patient_name">Patient Name</string>
     <string name="button_main">Next</string>
@@ -29,10 +39,11 @@
     <string name="patient_history"> chelou
     </string>
     <string name="patient_background">Diabetes</string>
-    
-    
-    
-    // Strings used for AddActivity
+
+
+
+    <!--add activity-->
+
 
     <string name="title_activity_add">AddActivity</string>
     <string name="register">Register</string>
