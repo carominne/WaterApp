@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">WaterApp</string>
     <string name="action_settings">Settings</string>
     <!--main activity-->
@@ -54,7 +54,6 @@
     <string name="lastname">Lastname</string>
     <string name="forename">Forename</string>
     <string name="date_of_birth">Date of birth</string>
-    <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
@@ -63,10 +62,12 @@
     <string name="num2">Num2</string>
     <string name="d1">d1</string>
     <string name="d2">d2</string>
-    <string name="room_number">Room number</string>
     <string name="validate">Validate</string>
-    <string name="medical_background">Medical background</string>
     <string name="cancel">Cancel</string>
     <string name="add_a_new_patient">Add a new patient</string>
     <string name="title_activity_overview">OverviewActivity</string>
+    <string name="next">next</string>
+    <string name="previous">previous</string>
+    <string name="first_fragment_label">first_fragment_label</string>
+    <string name="second_fragment_label">second_fragment_label</string>
 </resources>

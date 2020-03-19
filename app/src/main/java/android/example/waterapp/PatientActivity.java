@@ -1,9 +1,11 @@
-package com.example.waterapp;
+package android.example.waterapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.example.waterapp.R;
 
 public class PatientActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.waterapp;
+package android.example.waterapp;
 
 import org.junit.Test;
 
