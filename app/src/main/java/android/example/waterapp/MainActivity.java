@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mMainPassword;
     public static final int TEXT_REQUEST = 1;
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+//test 16:53 pour voir si merge est utile
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
