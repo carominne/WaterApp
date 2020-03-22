@@ -47,7 +47,9 @@
                 android:layout_marginRight="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="parent"
+                android:textColorLink="#FFFFFF"
+                android:backgroundTint="@color/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/lastname_text"
