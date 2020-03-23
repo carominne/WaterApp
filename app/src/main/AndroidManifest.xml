@@ -12,7 +12,7 @@
         <activity
             android:name=".FeedbackActivity"
             android:label="@string/title_activity_feedback"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PatientActivity" />
         <activity
             android:name=".OverviewActivity"
@@ -20,6 +20,10 @@
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModifyActivity"
+            android:label="ModifyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"

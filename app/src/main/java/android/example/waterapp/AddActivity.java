@@ -37,6 +37,7 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.add_a_new_patient);
+        toolbar.setTitleTextColor(0XFFFFFFFF);
         mlastname= findViewById(R.id.lastname_text);
         mforename = findViewById(R.id.forename_text);
 

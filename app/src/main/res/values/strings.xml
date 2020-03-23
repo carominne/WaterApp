@@ -78,4 +78,5 @@
     <string name="question_fb">Question(s)</string>
     <string name="text_feedback">Type Your Message Here</string>
     <string name="feedback_form">Feedback Form</string>
+    <string name="title_activity_modify">ModifyActivity</string>
 </resources>
