@@ -40,8 +40,9 @@ public class OverviewActivity extends AppCompatActivity {
         menu.getItem(1).setVisible(true);
         menu.getItem(2).setVisible(false);
         menu.getItem(3).setVisible(false);
-        menu.getItem(4).setVisible(false);
-        menu.getItem(5).setVisible(true);
+        menu.getItem(4).setVisible(true);
+        menu.getItem(5).setVisible(false);
+        menu.getItem(6).setVisible(false);
         return true;
     }
     @Override

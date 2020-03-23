@@ -29,8 +29,9 @@ public class PatientActivity extends AppCompatActivity {
         menu.getItem(1).setVisible(false);
         menu.getItem(2).setVisible(true);
         menu.getItem(3).setVisible(true);
-        menu.getItem(4).setVisible(true);
-        menu.getItem(5).setVisible(false);
+        menu.getItem(4).setVisible(false);
+        menu.getItem(5).setVisible(true);
+        menu.getItem(6).setVisible(true);
         return true;
     }
     @Override
@@ -43,10 +44,16 @@ public class PatientActivity extends AppCompatActivity {
                 break;
             case R.id.action_stat:
                 Toast.makeText(this, "Need activity for statistics", Toast.LENGTH_LONG).show();
+                break;
             case R.id.action_back:
                 Intent intent2 = new Intent(this, OverviewActivity.class);
                 startActivityForResult(intent2, TEXT_REQUEST);
-
+                break;
+            case R.id.action_delete:
+//                ajouter la requete vers la vbb
+                Toast.makeText(this, "Patient deleted", Toast.LENGTH_LONG).show();
+                Intent intent3 = new Intent(this, OverviewActivity.class);
+                startActivityForResult(intent3, TEXT_REQUEST);
         }
         return true;
     }
