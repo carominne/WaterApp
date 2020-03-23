@@ -9,10 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".PatientActivity" />
         <activity
             android:name=".OverviewActivity"
-            android:label="Patient's list"/>
+            android:label="Patient&apos;s list" />
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add"

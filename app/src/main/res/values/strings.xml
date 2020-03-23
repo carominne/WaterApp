@@ -45,7 +45,6 @@
     <string name="patient_background">Diabetes</string>
 
 
-
     <!--add activity-->
 
 
@@ -70,4 +69,13 @@
     <string name="previous">previous</string>
     <string name="first_fragment_label">first_fragment_label</string>
     <string name="second_fragment_label">second_fragment_label</string>
+
+    <!-- Feedback Activity -->
+
+    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="comment_fb">Comment(s)</string>
+    <string name="bug_fb">Bug(s)</string>
+    <string name="question_fb">Question(s)</string>
+    <string name="text_feedback">Type Your Message Here</string>
+    <string name="feedback_form">Feedback Form</string>
 </resources>

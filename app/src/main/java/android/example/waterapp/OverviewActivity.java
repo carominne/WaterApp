@@ -12,7 +12,7 @@ import android.example.waterapp.R;
 
 public class OverviewActivity extends AppCompatActivity {
 
-    public static final int TEXT_REQUEST = 1; 
+    public static final int TEXT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
