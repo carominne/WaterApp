@@ -9,7 +9,7 @@
     <string name="main_button_text">Log In</string>
 
     <!--overview activity-->
-    <string name="patient_a">Patient A</string>
+    <string name='patient_a'>Patient A</string>
     <string name="patient_b">Patient B</string>
     <string name="patient_c">Patient C</string>
     <string name="new_patient_button">New patient</string>
