@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,12 +15,15 @@ import android.widget.Toast;
 public class PatientActivity extends AppCompatActivity {
 
     public static final int TEXT_REQUEST = 1;
+    private static final String LOG_TAG = "test2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         Intent intent = getIntent();
+        Bundle patient = intent.getParcelableExtra(OverviewActivity.EXTRA_PATIENT);
+        Log.i(LOG_TAG, "coucou" + patient);
     }
 
     @Override

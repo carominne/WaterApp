@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +28,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
+    public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
     public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':false,'medication2':true,'medication3':false,'disease1':false,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':0,'gender':'M','age':21,'medication1':false,'medication2':true,'medication3':false,'disease1':false,'room':null}"};
     public Patient[] patients = new Patient[json.length];
+    public Integer nb_patient = json.length;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
+        if (view.getId() == R.id.buttonCollect){
+            intent.putExtra(EXTRA_PATIENT, (Parcelable) patients[0]);
+            Log.i(LOG_TAG, "coucou");
+        }
         startActivityForResult(intent, TEXT_REQUEST);
     }
 
