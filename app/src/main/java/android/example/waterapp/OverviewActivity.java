@@ -1,9 +1,11 @@
 package android.example.waterapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -29,10 +31,12 @@ public class OverviewActivity extends AppCompatActivity {
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':0,'gender':'M','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':null}"};
+    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':12}"};
     public Patient[] patients = new Patient[json.length];
+    public ArrayList<Patient> pat ;
     public Integer nb_patient = json.length;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +47,10 @@ public class OverviewActivity extends AppCompatActivity {
             }.getType());
             patients[i] = patient;
         }
-        Log.i(LOG_TAG, "coucou: " + patients[0].getName());
-        this.updateTextView(patients[0].getName()+" " + patients[0].getForename() +" : " + patients[0].getRoom());
+        pat = new ArrayList<>(Arrays.asList(patients));
+        pat.sort(new SortedPatient());
+        Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
+        this.updateTextView(pat.get(0).getName()+" " + pat.get(0).getForename() +" : " + pat.get(0).getRoom());
     }
 
     public void updateTextView(String toThis) {
@@ -55,7 +61,7 @@ public class OverviewActivity extends AppCompatActivity {
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         if (view.getId() == R.id.buttonCollect){
-            intent.putExtra(EXTRA_PATIENT, patients[0]);
+            intent.putExtra(EXTRA_PATIENT, pat.get(0));
             Log.i(LOG_TAG, "coucou" + patients[0].getGender());
         }
         startActivity(intent);
