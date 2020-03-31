@@ -3,11 +3,13 @@ package android.example.waterapp;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,8 @@ import android.view.View;
 
 import android.example.waterapp.R;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,44 +30,58 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OverviewActivity extends AppCompatActivity {
+public class OverviewActivity extends AppCompatActivity  implements  View.OnClickListener {
 
+    LinearLayout layout;
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':12}"};
+    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState': 0,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':12}"};
     public Patient[] patients = new Patient[json.length];
     public ArrayList<Patient> pat ;
     public Integer nb_patient = json.length;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
         Log.i(LOG_TAG, "coucou: " + json.length);
-        for (int i=0; i< json.length; i++){
+        layout = findViewById(R.id.layout_overview);
+        for (int i = 0; i< json.length; i++) {
+
             Patient patient = new Gson().fromJson(json[i], new TypeToken<Patient>() {
             }.getType());
             patients[i] = patient;
         }
-        pat = new ArrayList<>(Arrays.asList(patients));
-        pat.sort(new SortedPatient());
-        Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
-        this.updateTextView(pat.get(0).getName()+" " + pat.get(0).getForename() +" : " + pat.get(0).getRoom());
-    }
 
-    public void updateTextView(String toThis) {
-        Button textView = (Button) findViewById(R.id.buttonCollect);
-        textView.setText(toThis);
+        pat = new ArrayList<>(Arrays.asList(patients));
+        Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
+        pat.sort(new SortedPatient());
+
+        for (int i = 0; i< json.length; i++) {
+            Log.i(LOG_TAG, "coucou P>P: " + i);
+
+            final Button button=new Button(this);
+            button.setLayoutParams(new LinearLayout.LayoutParams(200, 400));
+            button.setId(i);
+            button.setText(pat.get(i).getName() +" " + pat.get(i).getForename() + " :" + pat.get(i).getRoom() );
+            button.setOnClickListener(this);
+
+            layout.addView(button);
+        }
+
+//        this.updateTextView(pat.get(0).getName()+" " + pat.get(0).getForename()
     }
 
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
-        if (view.getId() == R.id.buttonCollect){
-            intent.putExtra(EXTRA_PATIENT, pat.get(0));
-            Log.i(LOG_TAG, "coucou" + patients[0].getGender());
-        }
+//        if (view.getId() == R.id.buttonCollect){
+        @SuppressLint("ResourceType") int ind = view.getId();
+        intent.putExtra(EXTRA_PATIENT, pat.get(ind));
+        Log.i(LOG_TAG, "coucou" + patients[ind].getGender());
+//        }
         startActivity(intent);
     }
 
@@ -82,6 +100,7 @@ public class OverviewActivity extends AppCompatActivity {
         menu.getItem(4).setVisible(true);
         menu.getItem(5).setVisible(false);
         menu.getItem(6).setVisible(false);
+        menu.getItem(7).setVisible(true);
         return true;
     }
     @Override
@@ -96,9 +115,17 @@ public class OverviewActivity extends AppCompatActivity {
                 startActivityForResult(intent, TEXT_REQUEST);
                 break;
             case R.id.action_deconnect:
-                 Intent intent2 = new Intent(this, MainActivity.class);
-                 startActivityForResult(intent2, TEXT_REQUEST);
+                Intent intent2 = new Intent(this, MainActivity.class);
+                startActivityForResult(intent2, TEXT_REQUEST);
+            case R.id.action_add_patient:
+                Intent intent3 = new Intent(this, AddActivity.class);
+                startActivityForResult(intent3, TEXT_REQUEST);
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        launchPatientActivity(v);
     }
 }

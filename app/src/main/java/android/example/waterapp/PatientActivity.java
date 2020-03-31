@@ -77,6 +77,7 @@ public class PatientActivity extends AppCompatActivity {
         menu.getItem(4).setVisible(false);
         menu.getItem(5).setVisible(true);
         menu.getItem(6).setVisible(true);
+        menu.getItem(7).setVisible(false);
         return true;
     }
     @Override

@@ -41,5 +41,11 @@
         android:title="Delete patient"
         />
 
+    <item
+        android:id="@+id/action_add_patient"
+        android:orderInCategory="100"
+        android:title="Add a new patient"
+        />
+
 
 </menu>
