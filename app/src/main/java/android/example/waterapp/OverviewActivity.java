@@ -56,9 +56,9 @@ public class OverviewActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PatientActivity.class);
         if (view.getId() == R.id.buttonCollect){
             intent.putExtra(EXTRA_PATIENT, patients[0]);
-            Log.i(LOG_TAG, "coucou");
+            Log.i(LOG_TAG, "coucou" + patients[0].getGender());
         }
-        startActivityForResult(intent, TEXT_REQUEST);
+        startActivity(intent);
     }
 
     public void launchAddActivity(View view) {

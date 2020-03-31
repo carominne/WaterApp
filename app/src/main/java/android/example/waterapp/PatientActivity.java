@@ -22,8 +22,8 @@ public class PatientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         Intent intent = getIntent();
-        Patient patient = intent.getParcelableExtra(OverviewActivity.EXTRA_PATIENT);
-        Log.i(LOG_TAG, "coucou " + patient.getGender());
+        Patient patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
+        Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
     }
 
     @Override
