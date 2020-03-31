@@ -29,7 +29,7 @@ public class OverviewActivity extends AppCompatActivity {
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':false,'medication2':true,'medication3':false,'disease1':false,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':0,'gender':'M','age':21,'medication1':false,'medication2':true,'medication3':false,'disease1':false,'room':null}"};
+    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState':0,'gender':'M','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':0,'gender':'M','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':null}"};
     public Patient[] patients = new Patient[json.length];
     public Integer nb_patient = json.length;
 
@@ -52,11 +52,10 @@ public class OverviewActivity extends AppCompatActivity {
         textView.setText(toThis);
     }
 
-
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         if (view.getId() == R.id.buttonCollect){
-            intent.putExtra(EXTRA_PATIENT, (Parcelable) patients[0]);
+            intent.putExtra(EXTRA_PATIENT, patients[0]);
             Log.i(LOG_TAG, "coucou");
         }
         startActivityForResult(intent, TEXT_REQUEST);
