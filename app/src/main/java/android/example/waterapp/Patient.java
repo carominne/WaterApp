@@ -174,50 +174,22 @@ public class Patient implements Parcelable {
     };
 
     public Patient(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
+        id = in.readInt();
+        room = in.readInt();
 
-        if (in.readByte() == 0) {
-            room = null;
-        } else {
-            room = in.readInt();
-        }
         name = in.readString();
         forename = in.readString();
-        if (in.readByte() == 0) {
-            dehydrationState = null;
-        } else {
-            dehydrationState = in.readInt();
-        }
+        dehydrationState = in.readInt();
+
         gender = in.readString();
-        if (in.readByte() == 0) {
-            age = null;
-        } else {
-            age = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            medication1 = null;
-        } else {
-            medication1 = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            medication2 = null;
-        } else {
-            medication2 = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            medication3 = null;
-        } else {
-            medication3 = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            disease1 = null;
-        } else {
-            disease1 = in.readInt();
-        }
+        age = in.readInt();
+        medication1 = in.readInt();
+        medication2 = in.readInt();
+        medication3 = in.readInt();
+
+
+        disease1 = in.readInt();
+
     }
 
 
