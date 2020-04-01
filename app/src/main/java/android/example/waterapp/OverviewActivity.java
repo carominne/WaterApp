@@ -110,11 +110,8 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
 
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
-//        if (view.getId() == R.id.buttonCollect){
         @SuppressLint("ResourceType") int ind = view.getId();
         intent.putExtra(EXTRA_PATIENT, pat.get(ind));
-        Log.i(LOG_TAG, "coucou" + patients[ind].getGender());
-//        }
         startActivity(intent);
     }
 

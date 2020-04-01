@@ -2,7 +2,10 @@ package android.example.waterapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,16 +18,19 @@ import android.widget.Toast;
 
 public class PatientActivity extends AppCompatActivity {
 
+    public Patient patient;
+    public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "test2";
     private String medication = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         Intent intent = getIntent();
-        Patient patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
+        patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
         this.updateTextViewName(patient.getForename() + " "+ patient.getName());
         this.updateTextViewAge(String.valueOf(patient.getAge()));
         this.updateTextViewRoom(String.valueOf(patient.getRoom()));
@@ -32,7 +38,7 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
         this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
-                Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
+        Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
     }
 
     private void updateTextViewMedication(String med1, String med2, String med3) {
@@ -122,7 +128,9 @@ public class PatientActivity extends AppCompatActivity {
         switch(id){
             case R.id.action_modifiy:
                 Intent intent = new Intent(this, ModifyActivity.class);
-                startActivityForResult(intent, TEXT_REQUEST);
+                intent.putExtra(EXTRA_PATIENT, patient);
+                Log.i(LOG_TAG, "STP " + patient.getGender() );
+                startActivity(intent);
                 break;
             case R.id.action_stat:
                 Toast.makeText(this, "Need activity for statistics", Toast.LENGTH_LONG).show();
@@ -132,10 +140,32 @@ public class PatientActivity extends AppCompatActivity {
                 startActivityForResult(intent2, TEXT_REQUEST);
                 break;
             case R.id.action_delete:
-//                ajouter la requete vers la vbb
-                Toast.makeText(this, "Patient deleted", Toast.LENGTH_LONG).show();
-                Intent intent3 = new Intent(this, OverviewActivity.class);
-                startActivityForResult(intent3, TEXT_REQUEST);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setCancelable(true);
+                builder.setTitle("Confirmation");
+                builder.setMessage("Do you really want to delete this patient?");
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //                ajouter la requete vers la vbb
+                                Toast.makeText(PatientActivity.this, "Patient deleted", Toast.LENGTH_LONG).show();
+                                Intent mainIntent;
+                                mainIntent = new Intent(PatientActivity.this, OverviewActivity.class);
+                                PatientActivity.this.startActivity(mainIntent);
+                                PatientActivity.this.finish();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
         }
         return true;
     }

@@ -20,7 +20,7 @@
         android:text="@string/validate"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:onClick="launchPatientActivity"/>
+        android:onClick="launchPatientActivityFromModif"/>
 
     <Button
         android:id="@+id/cancel2"
@@ -35,7 +35,7 @@
         android:text="Cancel"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:onClick="launchPatientActivity"/>
+        android:onClick="launchPatientActivityFromModif"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="24dp"
                 android:text="@string/lastname"
@@ -196,8 +196,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/male"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-                    android:checked="true"/>
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
                 <RadioButton
                     android:id="@+id/female"
@@ -259,8 +258,19 @@
                 android:text="@string/num2"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/medications"
-                app:layout_constraintTop_toBottomOf="@+id/med1"
-                android:checked="true"/>
+                app:layout_constraintTop_toBottomOf="@+id/med1" />
+
+            <CheckBox
+                android:id="@+id/med3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:text="Num3"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/medications"
+                app:layout_constraintTop_toBottomOf="@+id/med2" />
 
 
             <TextView
@@ -276,7 +286,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/med2"/>
+                app:layout_constraintTop_toBottomOf="@+id/med3"/>
 
             <CheckBox
                 android:id="@+id/disease1"
@@ -288,9 +298,9 @@
                 android:text="@string/d1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/background"
-                app:layout_constraintTop_toBottomOf="@+id/med2" />
+                app:layout_constraintTop_toBottomOf="@+id/med3" />
 
-            <CheckBox
+<!--            <CheckBox
                 android:id="@+id/disease2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -301,7 +311,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/background"
                 app:layout_constraintTop_toBottomOf="@+id/disease1"
-                android:checked="true"/>
+                android:checked="true"/>-->
 
 
             <TextView
