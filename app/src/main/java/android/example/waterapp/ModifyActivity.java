@@ -1,5 +1,6 @@
 package android.example.waterapp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class ModifyActivity extends AppCompatActivity {
 
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
-        startActivityForResult(intent, TEXT_REQUEST);
+        startActivity(intent);
     }
 
 }
