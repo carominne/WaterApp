@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
-
-import com.android.volley.*;
+;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.*;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mMainPassword;
     public static final int TEXT_REQUEST = 1;
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//test 16:53 pour voir si merge est utile//nouveau test
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
 
+
         final TextView textView = (TextView) findViewById(R.id.textview_main);
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://api.github.com";
+        String url ="https://www.google.com";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
