@@ -17,6 +17,7 @@ public class PatientActivity extends AppCompatActivity {
 
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "test2";
+    private String medication = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,42 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewRoom(String.valueOf(patient.getRoom()));
         this.updateTextViewGender(patient.getGender());
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
+        this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
+        this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
                 Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
+    }
+
+    private void updateTextViewMedication(String med1, String med2, String med3) {
+        TextView textView = (TextView) findViewById(R.id.patient_medication);
+        Boolean x = med2.equals("1");
+        Log.i(LOG_TAG, "coucou" + x);
+        if (med1.equals("1")){
+            medication += "Medication 1\n";
+        }
+        if (med2.equals("1")){
+            Log.i(LOG_TAG, med2);
+            medication += "Medication 2\n";
+        }
+        if (med3.equals("1")){
+            medication += "Medication 3\n";
+        }
+        if (med2.equals("0") && med1.equals("0") && med3.equals("0")){
+            medication += "No medication taken\n";
+        }
+        textView.setText(medication);
+    }
+
+    private void updateTextViewDisease(String dis1) {
+        TextView textView = (TextView) findViewById(R.id.patient_background);
+        String disease = "";
+
+        if (dis1.equals("1")){
+            disease += "Renal Failure\n";
+        }
+        if (dis1.equals("0")){
+            disease += "No particular disease\n";
+        }
+        textView.setText(disease);
     }
 
     public void updateTextViewAge(String toThis) {
@@ -55,13 +91,13 @@ public class PatientActivity extends AppCompatActivity {
 
     public void updateTextViewDehydration(String toThis) {
         TextView textView = (TextView) findViewById(R.id.patient_dehydration_level);
-        if (toThis == "0") {
+        if (toThis.equals("0")) {
             textView.setText("Low");
         }
-        if (toThis == "1") {
+        if (toThis.equals("1")) {
             textView.setText("Medium");
         }
-        if (toThis == "2") {
+        if (toThis.equals("2")) {
             textView.setText("High");
         }
 

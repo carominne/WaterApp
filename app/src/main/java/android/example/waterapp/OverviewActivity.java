@@ -36,7 +36,7 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState': 0,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':0,'disease1':1,'room':12}"};
+    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState': 2,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12}"};
     public Patient[] patients = new Patient[json.length];
     public ArrayList<Patient> pat ;
     public Integer nb_patient = json.length;
