@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class OverviewActivity extends AppCompatActivity {
 
     public static final int TEXT_REQUEST = 1;
-//dd
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

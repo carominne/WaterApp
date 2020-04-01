@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
+
+import com.android.volley.*;
+import com.android.volley.toolbox.*;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -14,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,6 +40,27 @@ public class MainActivity extends AppCompatActivity {
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
+
+        final TextView textView = (TextView) findViewById(R.id.textview_main);
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="https://api.github.com";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        textView.setText("Response is: "+ response.substring(0,500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textView.setText("That didn't work!");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         //FloatingActionButton fab = findViewById(R.id.fab);
