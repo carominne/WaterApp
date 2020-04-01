@@ -2,26 +2,23 @@ package android.example.waterapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import android.example.waterapp.R;
-;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.*;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
             "com.example.android.twoactivities.extra.PASSWORD_KEY";
     private EditText mMainUsername;
     private EditText mMainPassword;
-    public static final int TEXT_REQUEST = 1;
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    private RequestQueue requestQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +42,58 @@ public class MainActivity extends AppCompatActivity {
         mMainPassword = findViewById(R.id.editText_password);
 
 
-        final TextView textView = (TextView) findViewById(R.id.textview_main);
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
         // Instantiate the RequestQueue.
-        RequestQueue queue = VolleyController.getInstance(this.getApplicationContext()).
-                getRequestQueue();
 
-        String url ="http://www.example.com"; //%%%%%%%%%%%%%%%%%%% mettre le lien vers la BDD
-
+        //RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        try {
+            String url = "http://api.ipify.org/?format=json";
+            //JSONObject object = new JSONObject();
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    resultTextView.setText("Response : " + response.toString());
+                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+/*        String url = "https://api.ipify.org/?format=json";//%%%%%%%%%%%%%%%%%%% mettre le lien vers la BDD
+        JSONObject object = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                        url,
+                        null,
+                        new Response.Listener<JSONObject>() {
+
                     @Override
-                    public void onResponse(String response) {
-                        textView.setText("Response is: "+ response.substring(0,500));
+                    public void onResponse(JSONObject response) {
+                        textView.setText("Response: " + response.toString());
+                        Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
                     }
                 },
-                new Response.ErrorListener() {
+                        new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        textView.setText("That didn't work!");
+                        textView.setText("Response:failed ");
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     }
-                });
+                });*/
 
-        // Add the request to the RequestQueue.
-        VolleyController.getInstance(this).addToRequestQueue(stringRequest);
-
+        // Access the RequestQueue through your singleton class.
+        //VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        //requestQueue.add(jsonObjectRequest);
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 /* OPERATIONS AVEC LA REQUESTQUEUE
@@ -80,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 // Add a request (in this example, called stringRequest) to your RequestQueue.
 VolleyController.getInstance(this).addToRequestQueue(stringRequest);
 */
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,7 +141,7 @@ VolleyController.getInstance(this).addToRequestQueue(stringRequest);
         }
         if (credentials == true){
             Intent intent = new Intent(this, OverviewActivity.class);
-            startActivityForResult(intent, TEXT_REQUEST);
+            startActivity(intent);
         }
     }
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
