@@ -47,34 +47,39 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView textView = (TextView) findViewById(R.id.textview_main);
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://www.google.com";
+        RequestQueue queue = VolleyController.getInstance(this.getApplicationContext()).
+                getRequestQueue();
+
+        String url ="http://www.example.com"; //%%%%%%%%%%%%%%%%%%% mettre le lien vers la BDD
+
+        // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
                         textView.setText("Response is: "+ response.substring(0,500));
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                textView.setText("That didn't work!");
-            }
-        });
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        textView.setText("That didn't work!");
+                    }
+                });
 
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        VolleyController.getInstance(this).addToRequestQueue(stringRequest);
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        //FloatingActionButton fab = findViewById(R.id.fab);
-/*        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+/* OPERATIONS AVEC LA REQUESTQUEUE
+// Get a RequestQueue
+    RequestQueue queue = VolleyController.getInstance(this.getApplicationContext()).
+            getRequestQueue();
+
+// Add a request (in this example, called stringRequest) to your RequestQueue.
+VolleyController.getInstance(this).addToRequestQueue(stringRequest);
+*/
     }
 
     @Override
