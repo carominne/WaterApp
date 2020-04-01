@@ -38,8 +38,22 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
         this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
+        this.updateTextViewSize(String.valueOf(patient.getSize()));
+        this.updateTextViewWeight(String.valueOf(patient.getWeight()));
         Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
     }
+
+    private void updateTextViewWeight(String w) {
+        TextView textView = (TextView) findViewById(R.id.patient_weight);
+        textView.setText(w);
+    }
+
+    private void updateTextViewSize(String size) {
+        TextView textView = (TextView) findViewById(R.id.patient_size);
+        textView.setText(size);
+    }
+
+
 
     private void updateTextViewMedication(String med1, String med2, String med3) {
         TextView textView = (TextView) findViewById(R.id.patient_medication);
