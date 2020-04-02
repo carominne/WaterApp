@@ -18,12 +18,12 @@
     <string name="title_activity_patient">PatientActivity</string>
     <string name="patient_name">Patient Name</string>
     <string name="button_main">Next</string>
-    <string name="dehydration_level">Current Dehydration Level:</string>
-    <string name="room_number">Room number:</string>
-    <string name="gender">Gender:</string>
-    <string name="age">Age:</string>
+    <string name="dehydration_level">Current Dehydration Level</string>
+    <string name="room_number">Room number</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
     <string name="birthday">Birthday</string>
-    <string name="medication">Medication:</string>
+    <string name="medication">Medication</string>
     <string name="medical_background">Medical Background</string>
     <string name="history">History</string>
     <string name="patient_medication">Afebril
