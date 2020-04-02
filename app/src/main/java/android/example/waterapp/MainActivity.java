@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,19 +41,16 @@ public class MainActivity extends AppCompatActivity {
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
-
-
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
-        // Instantiate the RequestQueue.
 
-        //RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
+
+
         // Formulate the request and handle the response.
         try {
-            String url = "http://api.ipify.org/?format=json";
+            final String URL = "https://api.ipify.org/?format=json";
             //JSONObject object = new JSONObject();
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     resultTextView.setText("Response : " + response.toString());
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     error.printStackTrace();
                 }
             });
-            requestQueue.add(jsonObjectRequest);
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,12 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
-    RequestQueue queue = VolleyController.getInstance(this.getApplicationContext()).
+    RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).
             getRequestQueue();
 
 // Add a request (in this example, called stringRequest) to your RequestQueue.
 VolleyController.getInstance(this).addToRequestQueue(stringRequest);
 */
+
 
 
     @Override
