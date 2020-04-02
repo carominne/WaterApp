@@ -31,6 +31,7 @@ public class PatientActivity extends AppCompatActivity {
     private String medication = "";
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class PatientActivity extends AppCompatActivity {
         patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
         this.updateTextViewName(patient.getForename() + " "+ patient.getName());
         this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
-        this.updateTextViewAge(String.valueOf(getAge(patient.getBirthday())));
+        this.updateTextViewAge(String.valueOf(patient.getAge()));
         this.updateTextViewRoom(String.valueOf(patient.getRoom()));
         this.updateTextViewGender(patient.getGender());
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
@@ -47,19 +48,6 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
         this.updateTextViewSize(String.valueOf(patient.getSize()));
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private Integer getAge(String birthday) {
-        int year = Integer.parseInt(birthday.substring(6));
-        int day = Integer.parseInt(birthday.substring(0,2));
-        int month = Integer.parseInt(birthday.substring(3,5));
-
-        LocalDate today = LocalDate.now();
-        LocalDate birth = LocalDate.of(year, month, day);
-        Period p = Period.between(birth, today);
-        int age = p.getYears();
-        return age;
     }
 
 

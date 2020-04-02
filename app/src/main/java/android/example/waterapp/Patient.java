@@ -8,6 +8,8 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 
@@ -39,6 +41,10 @@ public class Patient implements Parcelable {
     @SerializedName("birthday")
     @Expose
     private String birthday;
+
+    @SerializedName("age")
+    @Expose
+    private Integer age;
 
     @SerializedName("medication1")
     @Expose
@@ -81,6 +87,7 @@ public class Patient implements Parcelable {
         parcel.writeInt(dehydrationState);
         parcel.writeString(gender);
         parcel.writeString(birthday);
+        parcel.writeInt(age);
         parcel.writeInt(medication1);
         parcel.writeInt(medication2);
         parcel.writeInt(medication3);
@@ -137,9 +144,22 @@ public class Patient implements Parcelable {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setBirthday(String birthday) {this.birthday = birthday; }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Integer getAge(){
+            int year = Integer.parseInt(birthday.substring(6));
+            int day = Integer.parseInt(birthday.substring(0,2));
+            int month = Integer.parseInt(birthday.substring(3,5));
+            LocalDate today = LocalDate.now();
+            LocalDate birth = LocalDate.of(year, month, day);
+            Period p = Period.between(birth, today);
+            int age = p.getYears();
+            return age;
     }
+
+    public void setAge(Integer age){this.age = age;}
+
 
     public Integer getMedication1() {
         return medication1;
@@ -214,6 +234,7 @@ public class Patient implements Parcelable {
 
         gender = in.readString();
         birthday = in.readString();
+        age = in.readInt();
         medication1 = in.readInt();
         medication2 = in.readInt();
         medication3 = in.readInt();
