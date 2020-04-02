@@ -1,5 +1,6 @@
 package android.example.waterapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
@@ -15,6 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 
 public class PatientActivity extends AppCompatActivity {
 
@@ -32,7 +38,8 @@ public class PatientActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
         this.updateTextViewName(patient.getForename() + " "+ patient.getName());
-        this.updateTextViewAge(String.valueOf(patient.getAge()));
+        this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
+        this.updateTextViewAge(String.valueOf(getAge(patient.getBirthday())));
         this.updateTextViewRoom(String.valueOf(patient.getRoom()));
         this.updateTextViewGender(patient.getGender());
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
@@ -40,7 +47,25 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
         this.updateTextViewSize(String.valueOf(patient.getSize()));
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
-        Log.i(LOG_TAG, "coucou " + patient.getGender() + " age "+ patient.getAge() + " id "+ patient.getId() + " room "+ patient.getRoom()+ " name"+ patient.getName() + " forename" + patient.getForename() + " deh"+ patient.getDehydrationState() + "med "+ patient.getMedication1() + " disease "+ patient.getDisease1());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Integer getAge(String birthday) {
+        int year = Integer.parseInt(birthday.substring(6));
+        int day = Integer.parseInt(birthday.substring(0,2));
+        int month = Integer.parseInt(birthday.substring(3,5));
+
+        LocalDate today = LocalDate.now();
+        LocalDate birth = LocalDate.of(year, month, day);
+        Period p = Period.between(birth, today);
+        int age = p.getYears();
+        return age;
+    }
+
+
+    private void updateTextViewBirthday(String birthday) {
+        TextView textView = (TextView) findViewById(R.id.patient_birthday);
+        textView.setText(birthday);
     }
 
     private void updateTextViewWeight(String w) {

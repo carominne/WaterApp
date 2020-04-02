@@ -39,21 +39,21 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {"{'id':7,'name':'Hu','forename':'Louis','dehydrationState': 2,'gender':'M','age':21,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'size':180 ,'weight' : 65}", "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'gender':'F','age':21,'medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'size' : 173, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F','age':21,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}"};
+    public String[] json = {
+            "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'gender':'M','birthday':'02.04.1997','medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'size':180 ,'weight' : 65}",
+            "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'gender':'F','birthday':'20.11.1998','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'gender':'F','birthday':'30.07.1998','medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'size' : 173, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}",
+            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'size' : 175, 'weight': 58}"
+    };
     public Patient[] patients = new Patient[json.length];
     public ArrayList<Patient> pat ;
     public Integer nb_patient = json.length;

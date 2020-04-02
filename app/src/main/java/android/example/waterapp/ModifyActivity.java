@@ -46,7 +46,7 @@ public class ModifyActivity extends AppCompatActivity {
         patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
         this.updateTextViewForename(patient.getForename());
         this.updateTextViewLastname(patient.getName());
-//        this.updateTextViewDate(patient.getAge()); changer avec la date de naissance et pas l'age
+        this.updateTextViewDate(patient.getBirthday());
         this.updateCheckGenre(patient.getGender());
         this.updateCheckMedic(patient.getMedication1(), patient.getMedication2(), patient.getMedication3());
         this.updateCheckDiseases(patient.getDisease1());
@@ -55,6 +55,11 @@ public class ModifyActivity extends AppCompatActivity {
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
 
 
+    }
+
+    private void updateTextViewDate(String birthday) {
+        EditText editText = (EditText) findViewById(R.id.date);
+        editText.setText(birthday);
     }
 
     private void updateTextViewWeight(String w) {

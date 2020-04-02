@@ -36,9 +36,9 @@ public class Patient implements Parcelable {
     @Expose
     private String gender;
 
-    @SerializedName("age")
+    @SerializedName("birthday")
     @Expose
-    private Integer age;
+    private String birthday;
 
     @SerializedName("medication1")
     @Expose
@@ -80,7 +80,7 @@ public class Patient implements Parcelable {
         parcel.writeString(forename);
         parcel.writeInt(dehydrationState);
         parcel.writeString(gender);
-        parcel.writeInt(age);
+        parcel.writeString(birthday);
         parcel.writeInt(medication1);
         parcel.writeInt(medication2);
         parcel.writeInt(medication3);
@@ -132,12 +132,13 @@ public class Patient implements Parcelable {
         this.gender = gender;
     }
 
-    public Integer getAge() {
-        return age;
+
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public Integer getMedication1() {
@@ -212,7 +213,7 @@ public class Patient implements Parcelable {
         dehydrationState = in.readInt();
 
         gender = in.readString();
-        age = in.readInt();
+        birthday = in.readString();
         medication1 = in.readInt();
         medication2 = in.readInt();
         medication3 = in.readInt();
