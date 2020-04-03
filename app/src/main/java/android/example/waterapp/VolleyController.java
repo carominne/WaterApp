@@ -60,7 +60,7 @@ public class VolleyController {
 }
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
-    RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).
+    RequestQueue queue = VolleyController.getInstance(this.getApplicationContext()).
             getRequestQueue();
 
 // Add a request (in this example, called stringRequest) to your RequestQueue.
