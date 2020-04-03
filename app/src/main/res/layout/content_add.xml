@@ -267,7 +267,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:ems="10"
-                android:hint="Size (cm)"
+                android:hint="Height (cm)"
                 android:inputType="number"
                 android:textSize="20sp"
                 android:textStyle="bold" />

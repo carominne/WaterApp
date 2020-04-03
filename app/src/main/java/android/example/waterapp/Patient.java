@@ -62,9 +62,9 @@ public class Patient implements Parcelable {
     @Expose
     private Integer disease1;
 
-    @SerializedName("size")
+    @SerializedName("height")
     @Expose
-    private Integer size;
+    private Integer height;
 
     @SerializedName("weight")
     @Expose
@@ -92,7 +92,7 @@ public class Patient implements Parcelable {
         parcel.writeInt(medication2);
         parcel.writeInt(medication3);
         parcel.writeInt(disease1);
-        parcel.writeInt(size);
+        parcel.writeInt(height);
         parcel.writeInt(weight);
     }
 
@@ -193,12 +193,12 @@ public class Patient implements Parcelable {
         this.disease1 = disease1;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getHeight() {
+        return height;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
 
@@ -242,7 +242,7 @@ public class Patient implements Parcelable {
 
         disease1 = in.readInt();
 
-        size = in.readInt();
+        height = in.readInt();
         weight = in.readInt();
 
     }

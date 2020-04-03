@@ -51,7 +51,7 @@ public class ModifyActivity extends AppCompatActivity {
         this.updateCheckMedic(patient.getMedication1(), patient.getMedication2(), patient.getMedication3());
         this.updateCheckDiseases(patient.getDisease1());
         this.updateTextViewRoom(String.valueOf(patient.getRoom()));
-        this.updateTextViewSize(String.valueOf(patient.getSize()));
+        this.updateTextViewSize(String.valueOf(patient.getHeight()));
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
 
 

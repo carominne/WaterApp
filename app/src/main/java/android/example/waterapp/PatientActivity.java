@@ -46,7 +46,7 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
         this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
-        this.updateTextViewSize(String.valueOf(patient.getSize()));
+        this.updateTextViewSize(String.valueOf(patient.getHeight()));
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
     }
 
