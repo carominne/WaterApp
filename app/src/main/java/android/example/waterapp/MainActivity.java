@@ -15,9 +15,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,9 +49,34 @@ public class MainActivity extends AppCompatActivity {
         final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
 
 
+//   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
         // Formulate the request and handle the response.
-        try {
-            final String URL = "https://api.ipify.org/?format=json";
+       try {
+            final String URL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
+            //JSONObject object = new JSONObject();
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    resultTextView.setText("Response : " + response.toString());
+                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+//%%%%%%%%%%%%%%% JSONOBJECT GET REQUEST
+/*                try {
+            final String URL = "http://api.ipify.org/?format=json"; //https://api.ipify.org/?format=json
             //JSONObject object = new JSONObject();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -67,32 +95,29 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-/*        String url = "https://api.ipify.org/?format=json";//%%%%%%%%%%%%%%%%%%% mettre le lien vers la BDD
-        JSONObject object = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                        url,
-                        null,
-                        new Response.Listener<JSONObject>() {
+    }*/
+  /*             try {
+            final String URL = "http://10.0.2.2:8080/demo/all"; //https://api.ipify.org/?format=json
+            //JSONObject object = new JSONObject();
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    resultTextView.setText("Response : " + response.toString());
+                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        textView.setText("Response: " + response.toString());
-                        Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
-                    }
-                },
-                        new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        textView.setText("Response:failed ");
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                    }
-                });*/
-
-        // Access the RequestQueue through your singleton class.
-        //VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-        //requestQueue.add(jsonObjectRequest);
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
