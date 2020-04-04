@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
@@ -48,6 +50,19 @@ public class PatientActivity extends AppCompatActivity {
         this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
         this.updateTextViewSize(String.valueOf(patient.getHeight()));
         this.updateTextViewWeight(String.valueOf(patient.getWeight()));
+        this.updateTextViewHeartbeat(String.valueOf(patient.getHeartbeat()));
+        this.updateTextViewSpo(String.valueOf(patient.getSpo2()));
+
+    }
+
+    private void updateTextViewSpo(String spo) {
+        TextView textView = (TextView) findViewById(R.id.spo22);
+        textView.setText(spo);
+    }
+
+    private void updateTextViewHeartbeat(String heart) {
+        TextView textView = (TextView) findViewById(R.id.hearbeat2);
+        textView.setText(heart);
     }
 
 

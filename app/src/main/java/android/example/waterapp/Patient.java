@@ -34,6 +34,14 @@ public class Patient implements Parcelable {
     @Expose
     private Integer dehydrationState;
 
+    @SerializedName("heartbeat")
+    @Expose
+    private Integer heartbeat;
+
+    @SerializedName("spo2")
+    @Expose
+    private Integer spo2;
+
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -85,6 +93,8 @@ public class Patient implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(forename);
         parcel.writeInt(dehydrationState);
+        parcel.writeInt(heartbeat);
+        parcel.writeInt(spo2);
         parcel.writeString(gender);
         parcel.writeString(birthday);
         parcel.writeInt(age);
@@ -129,6 +139,22 @@ public class Patient implements Parcelable {
 
     public void setDehydrationState(Integer dehydrationState) {
         this.dehydrationState = dehydrationState;
+    }
+
+    public Integer getHeartbeat() {
+        return heartbeat;
+    }
+
+    public void setHeartbeat(Integer heartbeat) {
+        this.heartbeat= heartbeat;
+    }
+
+    public Integer getSpo2() {
+        return spo2;
+    }
+
+    public void setSpo2(Integer spo2) {
+        this.spo2 = spo2;
     }
 
     public String getGender() {
@@ -231,6 +257,8 @@ public class Patient implements Parcelable {
         name = in.readString();
         forename = in.readString();
         dehydrationState = in.readInt();
+        heartbeat = in.readInt();
+        spo2 = in.readInt();
 
         gender = in.readString();
         birthday = in.readString();
