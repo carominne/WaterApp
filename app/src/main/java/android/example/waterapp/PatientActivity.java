@@ -39,7 +39,7 @@ public class PatientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         Intent intent = getIntent();
-        patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
+        patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
         this.updateTextViewName(patient.getForename() + " "+ patient.getName());
         this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
         this.updateTextViewAge(String.valueOf(patient.getAge()));

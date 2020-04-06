@@ -78,6 +78,10 @@ public class Patient implements Parcelable {
     @Expose
     private Integer weight;
 
+    @SerializedName("button")
+    @Expose
+    private Integer button;
+
     public Integer getId() {
         return id;
     }
@@ -104,6 +108,7 @@ public class Patient implements Parcelable {
         parcel.writeInt(disease1);
         parcel.writeInt(height);
         parcel.writeInt(weight);
+        parcel.writeInt(button);
     }
 
     public void setId(Integer id) {
@@ -236,7 +241,13 @@ public class Patient implements Parcelable {
         this.weight = weight;
     }
 
+    public Integer getButton() {
+        return button;
+    }
 
+    public void setButton(Integer button) {
+        this.button = button;
+    }
 
     public static final Creator<Patient> CREATOR = new Creator<Patient>() {
         @Override
@@ -272,6 +283,8 @@ public class Patient implements Parcelable {
 
         height = in.readInt();
         weight = in.readInt();
+
+        button =  in.readInt();
 
     }
 

@@ -4,47 +4,51 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.Layout;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.example.waterapp.R;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class OverviewActivity extends AppCompatActivity  implements  View.OnClickListener {
+public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  View.OnClickListener {
 
     LinearLayout layout;
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
-    public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
-    public String[] json = {
-            "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'heartbeat' : 80, 'spo2' : 20, 'gender':'M','birthday':'02/04/1997', 'age' : 0,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'height':180 ,'weight' : 65}",
-            "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'20/11/1998','age':0, 'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'30/07/1998','age' :0, 'medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'height' : 173, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"
+    public final static String EXTRA_PATIENT = "com.example.myexampleapp.PATIENT";
+  //  public String[] json = {
+    //        "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'heartbeat' : 80, 'spo2' : 20, 'gender':'M','birthday':'02/04/1997', 'age' : 0,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'height':180 ,'weight' : 65}",
+      //      "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'20/11/1998','age':0, 'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
+      //    "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'30/07/1998','age' :0, 'medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'height' : 173, 'weight': 58}",
+      //  "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
+       //     "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"
 /*            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
@@ -53,10 +57,12 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"*/
-    };
-    public Patient[] patients = new Patient[json.length];
+   // };
+    public Patient[] patients = null;
     public ArrayList<Patient> pat ;
-    public Integer nb_patient = json.length;
+    public Integer nb_patient = 0;
+
+   // public VolleyCallback callback;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -67,13 +73,107 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
         setContentView(R.layout.activity_overview);
         layout = findViewById(R.id.layout_overview);
 
+        RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).
+                getRequestQueue();
+//   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
+        // Formulate the request and handle the response.
+        final String[] a = {""};
+        JSONArray json2 = null;
+        try {
+            final String URL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
 
-        for (int i = 0; i< json.length; i++) {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                    Integer l = response.length();
+                   // Boolean okk = sharedResponse(response.toString());
+                    Log.i(LOG_TAG, "coucou0076: " + "length" + l);
 
-            Patient patient = new Gson().fromJson(json[i], new TypeToken<Patient>() {
-            }.getType());
+                    sharedResponse(response.toString());
+
+
+
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+
+
+
+            //json2 = ssss.toString();
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        String mResponse = m.getString("Response", "");
+
+
+      //  Log.i(LOG_TAG, "coucou00788: " + mResponse);
+
+        mResponse = mResponse.substring(1,mResponse.length()-1);
+
+        String[] json = {};
+
+        String line = mResponse;
+        String[] words = line.split("\\}\\,");
+
+
+
+        Log.i(LOG_TAG, "coucou00788: " + words[0]);
+
+       /* int nel = 0;
+        String mm = "";
+        for (int i = 0; i<mResponse.length();i++)
+        {
+            char lp = mResponse.charAt(i);
+            if (l && mResponse[i-1] == "}" ){
+
+            }
+        }
+*/
+
+
+
+
+      //  mResponse.split("")
+
+     //   Gson g = new Gson();
+       // Patient p = g.fromJson(mResponse, Patient.class);
+
+    //    Log.i(LOG_TAG, "coucou0078: " + p);
+
+
+        patients = new Patient[words.length];
+
+        for (int i = 0; i< words.length; i++) {
+
+            Log.i(LOG_TAG, "coucou0098: " + words[i]+"}");
+            Patient patient = null;
+            if (i == words.length-1){
+                 patient = new Gson().fromJson(words[i], new TypeToken<Patient>() {
+                }.getType());
+            }
+
+            else {
+                 patient = new Gson().fromJson(words[i] + "}"     , new TypeToken<Patient>() {
+                }.getType());
+            }
+
+            patient.setButton(i);
             patients[i] = patient;
         }
+
 
         pat = new ArrayList<>(Arrays.asList(patients));
         Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
@@ -83,7 +183,7 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
         params.setMargins(75, 48, 24, 24);
 
 
-        for (int i = 0; i< json.length; i++) {
+        for (int i = 0; i< words.length; i++) {
 
             final Button button = new Button(this);
             int remainder = i % 2;
@@ -97,7 +197,7 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
             }
 
 
-            button.setId(i);
+            button.setId(pat.get(i).getButton());
             button.setText(pat.get(i).getName() + " " + pat.get(i).getForename() + " :" + pat.get(i).getRoom());
 
 
@@ -122,10 +222,24 @@ public class OverviewActivity extends AppCompatActivity  implements  View.OnClic
         }
     }
 
+
+    public void sharedResponse(String response) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        Log.i(LOG_TAG, "coucou0072: " + response);
+        editor.putString("Response", response);
+        editor.commit();
+    }
+
+
+
+
+
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         @SuppressLint("ResourceType") int ind = view.getId();
         intent.putExtra(EXTRA_PATIENT, pat.get(ind));
+        Log.i(LOG_TAG, "coucou0072: " + pat.get(ind));
         startActivity(intent);
     }
 
