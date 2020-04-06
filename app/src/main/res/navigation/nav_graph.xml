@@ -3,11 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/FirstFragment"
+    tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/FirstFragment"
         android:name="android.example.waterapp.FirstFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first"/>
+        tools:layout="@layout/fragment_first">
+
+    </fragment>
+    <activity
+        android:id="@+id/overviewActivity"
+        android:name="android.example.waterapp.OverviewActivity"
+        android:label="activity_overview"
+        tools:layout="@layout/activity_overview" />
 </navigation>
