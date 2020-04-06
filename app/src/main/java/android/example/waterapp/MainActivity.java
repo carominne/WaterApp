@@ -2,6 +2,7 @@ package android.example.waterapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +20,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity {
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             "com.example.android.twoactivities.extra.PASSWORD_KEY";
     private EditText mMainUsername;
     private EditText mMainPassword;
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
 
 
     @Override
@@ -48,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
 
-        RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).
-                getRequestQueue();
+
 //   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
         // Formulate the request and handle the response.
+
         try {
             final String URL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
 
@@ -59,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONArray response) {
                     resultTextView.setText("Response : " + response.toString());
-                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -72,6 +80,37 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+//POST method
+        JSONObject object = new JSONObject();
+        try {
+            //input your API parameters
+            object.put("name", "envoi depuis appli");
+            object.put("forename", "lululu");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Enter the correct url for your api service site
+        final String URL = "http://10.0.2.2:8080/demo/add";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //resultTextView.setText("String Response : " + response.toString());
+                        Toast.makeText(getApplicationContext(), "Post request sent !", Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                resultTextView.setText("Error posting");
+            }
+        });
+        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+
+
+
     }
 
 //%%%%%%%%%%%%%%% JSONOBJECT GET REQUEST
@@ -83,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     resultTextView.setText("Response : " + response.toString());
                     Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -119,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }*/
 
-        // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Post Request For JSONObject
+
+        // %%%%%%%%%%%%%// Post Request For JSONObject
         // ne fonctionne probablement pas... à voir avec les méthodes d'addition de patient quand on merge
        /* JSONObject object = new JSONObject();
         try {
