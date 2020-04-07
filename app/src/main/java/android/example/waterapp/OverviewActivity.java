@@ -115,7 +115,6 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
                    }.getType());
                }
 
-               patient.setButton(i);
                patients[i] = patient;
            }
 
@@ -123,6 +122,12 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
            pat = new ArrayList<>(Arrays.asList(patients));
            Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
            pat.sort(new SortedPatient());
+
+           for (int i = 0; i < pat.size(); i++) {
+               Patient patient = pat.get(i);
+               patient.setButton(i);
+               pat.set(i, patient);
+           }
 
            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400, 200);
            params.setMargins(75, 48, 24, 24);

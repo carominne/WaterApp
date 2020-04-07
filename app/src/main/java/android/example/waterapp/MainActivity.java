@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
 //   %%%%%%%%%%%%%%%  GET REQUEST for all patients (use of jsonArray)
         // Formulate the request and handle the response.
-        /*try {
+        try {
             final String get_allURL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
 
             JsonArrayRequest get_allRequest = new JsonArrayRequest(Request.Method.GET, get_allURL, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    resultTextView.setText("Response : " + response.toString());
+                 //   resultTextView.setText("Response : " + response.toString());
                    //Log.i(LOG_TAG, "coucou wtf: " + response.toString());
                     //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
                     sharedResponse(response.toString());
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             VolleyController.getInstance(getApplicationContext()).addToRequestQueue(get_allRequest);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
 
         //%%%%%%%%%%%%  GET REQUEST for a single patient (note: we have to use jsonObject request for a single patient)
