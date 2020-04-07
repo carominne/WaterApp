@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
         sharedResponse("");
@@ -60,13 +60,12 @@ public class MainActivity extends AppCompatActivity {
         final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
 
 
-//   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
+//   %%%%%%%%%%%%%%%  GET REQUEST for all patients (use of jsonArray)
         // Formulate the request and handle the response.
+        /*try {
+            final String get_allURL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
 
-        try {
-            final String URL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
-
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest get_allRequest = new JsonArrayRequest(Request.Method.GET, get_allURL, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     resultTextView.setText("Response : " + response.toString());
@@ -78,30 +77,82 @@ public class MainActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error in GET all", Toast.LENGTH_LONG).show();
                     error.printStackTrace();
                 }
             });
-            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(get_allRequest);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
+        //%%%%%%%%%%%%  GET REQUEST for a single patient (note: we have to use jsonObject request for a single patient)
+        /*try {
+            final String get_singleURL = "http://10.0.2.2:8080/demo/patient/12"; //12= id du patient dans la DB
 
+            JsonObjectRequest get_singleRequest = new JsonObjectRequest(Request.Method.GET, get_singleURL, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    resultTextView.setText("Response : " + response.toString());
+                    //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
 
-/*//POST method
-        JSONObject object = new JSONObject();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error in GET single patient", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(get_singleRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        //%%%%%%%%%%%%%%% DELETE Request
+
+ /*       final String deleteURL = "http://10.0.2.2:8080/demo/patient/19";
+        StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, deleteURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //resultTextView.setText("Response : " + response.toString());
+                Toast.makeText(getApplicationContext(), "Delete successful", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error in DELETE", Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
+        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(deleteRequest);
+*/
+
+        //%%%%%%%%%%%%%%%%%%% POST request
+
+        JSONObject postObject = new JSONObject();
         try {
             //input your API parameters
-            object.put("name", "envoi depuis appli");
-            object.put("forename", "lululu");
+            postObject.put("id", "2");
+            postObject.put("roomNumber", 12);
+            postObject.put("name", "testPOST");
+            postObject.put("forename", "post");
+            postObject.put("dehydrationState", 1);
+            postObject.put("heartbeat", 80);
+            postObject.put("spo2", 100);
+            postObject.put("gender", "M");
+            postObject.put("birthday", "20/12/2012");
+            postObject.put("weight", 70);
+            postObject.put("height", 170);
+            postObject.put("medication1", 1);
+            postObject.put("medication2", 1);
+            postObject.put("medication3", 1);
+            postObject.put("disease1", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // Enter the correct url for your api service site
-        final String URL = "http://10.0.2.2:8080/demo/add";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, object,
+        final String postURL = "http://10.0.2.2:8080/demo/add";
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, postURL, postObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -112,38 +163,54 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                resultTextView.setText("Error posting");
+                resultTextView.setText("Error POSTing");
             }
         });
-        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);*/
+        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(postRequest);
 
 
 
-    }
-
-//%%%%%%%%%%%%%%% JSONOBJECT GET REQUEST
-/*                try {
-            final String URL = "http://api.ipify.org/?format=json"; //https://api.ipify.org/?format=json
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    resultTextView.setText("Response : " + response.toString());
-                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                }
-            });
-            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-        } catch (Exception e) {
+        //%%%%%%%%%%%%% PUT request
+        JSONObject putObject = new JSONObject();
+        try {
+            //input your API parameters
+            putObject.put("id", "2");
+            putObject.put("roomNumber", 12);
+            putObject.put("name", "testput");
+            putObject.put("forename", "putput");
+            putObject.put("dehydrationState", 1);
+            putObject.put("heartbeat", 80);
+            putObject.put("spo2", 100);
+            putObject.put("gender", "M");
+            putObject.put("birthday", "20/12/2012");
+            putObject.put("weight", 70);
+            putObject.put("height", 170);
+            putObject.put("medication1", 1);
+            putObject.put("medication2", 1);
+            putObject.put("medication3", 1);
+            putObject.put("disease1", 1);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-    }*/
+        final String putURL = "http://10.0.2.2:8080/demo/patientAll/23";
+        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, putURL, putObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //resultTextView.setText("String Response : " + response.toString());
+                        Toast.makeText(getApplicationContext(), "PUT request sent !", Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                resultTextView.setText("Error PUTing");
+            }
+        });
+        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(putRequest);
+    }
+
+
 //%%%%%%%%%%%%%%% String GET REQUEST
 /*              try {
             final String URL = "http://10.0.2.2:8080/demo/all"; //https://api.ipify.org/?format=json
@@ -167,34 +234,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }*/
 
-
-        // %%%%%%%%%%%%%// Post Request For JSONObject
-        // ne fonctionne probablement pas... à voir avec les méthodes d'addition de patient quand on merge
-       /* JSONObject object = new JSONObject();
-        try {
-            //input your API parameters
-            object.put("parameter", "value");
-            object.put("parameter", "value");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Enter the correct url for your api service site
-        final String URL = "http://10.0.2.2:8080/demo/add";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, object,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        resultTextView.setText("String Response : " + response.toString());
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                resultTextView.setText("Error getting response");
-            }
-        });
-        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-
-    }
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
     RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).
@@ -211,7 +250,6 @@ VolleyController.getInstance(this).addToRequestQueue(stringRequest);
         editor.putString("Response", response);
         editor.commit();
     }
-
 
 
     @Override
@@ -244,10 +282,10 @@ VolleyController.getInstance(this).addToRequestQueue(stringRequest);
         String username = mMainUsername.getText().toString();
         String password = mMainPassword.getText().toString();
 
-        if(true){
-            credentials=true; // vérifications des données, si c'est juste, on met credentials à 1
+        if (true) {
+            credentials = true; // vérifications des données, si c'est juste, on met credentials à 1
         }
-        if (credentials == true){
+        if (credentials == true) {
             Intent intent = new Intent(this, OverviewActivity.class);
             startActivity(intent);
         }
