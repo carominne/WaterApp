@@ -45,7 +45,8 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.myexampleapp.PATIENT";
     public String jpp ="";
-  //  public String[] json = {
+    public  String mResponse;
+    //  public String[] json = {
     //        "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'heartbeat' : 80, 'spo2' : 20, 'gender':'M','birthday':'02/04/1997', 'age' : 0,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'height':180 ,'weight' : 65}",
       //      "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'20/11/1998','age':0, 'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
       //    "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'30/07/1998','age' :0, 'medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'height' : 173, 'weight': 58}",
@@ -84,7 +85,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
         request();
 
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        String mResponse = m.getString("Response", "");
+        mResponse = m.getString("Response", "");
 
 
        Log.i(LOG_TAG, "coucou00788: " + mResponse);
@@ -171,8 +172,19 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
                layout.addView(button);
            }
        }
+        final Intent intent = getIntent();
 
+        if (intent.getIntExtra("var", 1)==4) {
+            Log.i(LOG_TAG, "JE REDEMARRE");
+           Intent i = new Intent(OverviewActivity.this, OverviewActivity.class);
+         //  finish();
+           overridePendingTransition(0, 0);
+           startActivity(i);
+           overridePendingTransition(0, 0);
+
+       }
     }
+
 
 
     public void request (){
@@ -204,7 +216,6 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 

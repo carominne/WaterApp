@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
-        sharedResponse("");
+       sharedResponse("");
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
 //   %%%%%%%%%%%%%%%  GET REQUEST for all patients (use of jsonArray)
         // Formulate the request and handle the response.
-        try {
+      /*  try {
             final String get_allURL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
 
             JsonArrayRequest get_allRequest = new JsonArrayRequest(Request.Method.GET, get_allURL, null, new Response.Listener<JSONArray>() {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             VolleyController.getInstance(getApplicationContext()).addToRequestQueue(get_allRequest);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         //%%%%%%%%%%%%  GET REQUEST for a single patient (note: we have to use jsonObject request for a single patient)
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //%%%%%%%%%%%%% PUT request
-        JSONObject putObject = new JSONObject();
+     /*   JSONObject putObject = new JSONObject();
         try {
             //input your API parameters
             putObject.put("id", "2");
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         VolleyController.getInstance(getApplicationContext()).addToRequestQueue(putRequest);
-    }
+    }*/
 
 
 //%%%%%%%%%%%%%%% String GET REQUEST
@@ -231,8 +231,8 @@ public class MainActivity extends AppCompatActivity {
             VolleyController.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }*/
+        }*/
+    }
 
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
@@ -287,7 +287,8 @@ VolleyController.getInstance(this).addToRequestQueue(stringRequest);
         }
         if (credentials == true) {
             Intent intent = new Intent(this, OverviewActivity.class);
-            startActivity(intent);
+            intent.putExtra("var", 4);
+            MainActivity.this.startActivity(intent);
         }
     }
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%

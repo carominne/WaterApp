@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,13 +51,13 @@ public class PatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient);
         final Intent intent = getIntent();
         Log.i(LOG_TAG, "coucou wtf: " + intent);
-      // patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
+        // patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
 
         try {
-            final String get_singleURL = "http://10.0.2.2:8080/demo/patient/" + intent.getIntExtra("id",0); // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
+            final String get_singleURL = "http://10.0.2.2:8080/demo/patient/" + intent.getIntExtra("id", 0); // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
             Log.i(LOG_TAG, "coucou wtf: " + get_singleURL);
 
-            JsonObjectRequest get_singleRequest = new JsonObjectRequest(Request.Method.GET,  get_singleURL , null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest get_singleRequest = new JsonObjectRequest(Request.Method.GET, get_singleURL, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -64,14 +65,14 @@ public class PatientActivity extends AppCompatActivity {
 
                     //Log.i(LOG_TAG, "coucou wtf: " + response.toString());
                     //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
-                   // sharedResponse(response.toString());
+                    // sharedResponse(response.toString());
 
                     patient = new Gson().fromJson(String.valueOf(response), new TypeToken<Patient>() {
                     }.getType());
 
-                    patient.setButton( intent.getIntExtra("button",0));
+                    patient.setButton(intent.getIntExtra("button", 0));
 
-                    this.updateTextViewName(patient.getForename() + " "+ patient.getName());
+                    this.updateTextViewName(patient.getForename() + " " + patient.getName());
                     this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
                     this.updateTextViewAge(String.valueOf(patient.getAge()));
                     this.updateTextViewRoom(String.valueOf(patient.getRoom()));
@@ -114,22 +115,21 @@ public class PatientActivity extends AppCompatActivity {
                 }
 
 
-
                 private void updateTextViewMedication(String med1, String med2, String med3) {
                     TextView textView = (TextView) findViewById(R.id.patient_medication);
                     Boolean x = med2.equals("1");
                     Log.i(LOG_TAG, "coucou" + x);
-                    if (med1.equals("1")){
+                    if (med1.equals("1")) {
                         medication += "Medication 1\n";
                     }
-                    if (med2.equals("1")){
+                    if (med2.equals("1")) {
                         Log.i(LOG_TAG, med2);
                         medication += "Medication 2\n";
                     }
-                    if (med3.equals("1")){
+                    if (med3.equals("1")) {
                         medication += "Medication 3\n";
                     }
-                    if (med2.equals("0") && med1.equals("0") && med3.equals("0")){
+                    if (med2.equals("0") && med1.equals("0") && med3.equals("0")) {
                         medication += "No medication taken\n";
                     }
                     textView.setText(medication);
@@ -139,10 +139,10 @@ public class PatientActivity extends AppCompatActivity {
                     TextView textView = (TextView) findViewById(R.id.patient_background);
                     String disease = "";
 
-                    if (dis1.equals("1")){
+                    if (dis1.equals("1")) {
                         disease += "Renal Failure\n";
                     }
-                    if (dis1.equals("0")){
+                    if (dis1.equals("0")) {
                         disease += "No particular disease\n";
                     }
                     textView.setText(disease);
@@ -169,7 +169,7 @@ public class PatientActivity extends AppCompatActivity {
                     textView.setText(toThis);
                 }
 
-                public void updateTextViewDehydration(String toThis){
+                public void updateTextViewDehydration(String toThis) {
                     TextView textView = (TextView) findViewById(R.id.patient_dehydration_level);
                     if (toThis.equals("0")) {
                         textView.setText("Low");
@@ -198,9 +198,8 @@ public class PatientActivity extends AppCompatActivity {
     }
 
 
-
     @Override
-    public boolean onCreateOptionsMenu (Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
@@ -212,14 +211,15 @@ public class PatientActivity extends AppCompatActivity {
         menu.getItem(7).setVisible(false);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id){
+        switch (id) {
             case R.id.action_modifiy:
                 Intent intent = new Intent(this, ModifyActivity.class);
                 intent.putExtra(EXTRA_PATIENT, patient);
-                Log.i(LOG_TAG, "STP " + patient.getGender() );
+                Log.i(LOG_TAG, "STP " + patient.getGender());
                 startActivity(intent);
                 break;
             case R.id.action_stat:
@@ -240,9 +240,29 @@ public class PatientActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //                ajouter la requete vers la vbb
-                                Toast.makeText(PatientActivity.this, "Patient deleted", Toast.LENGTH_LONG).show();
+                                //    %%%%%%%%%%%%%%% DELETE Request
+
+                                final String deleteURL = "http://10.0.2.2:8080/demo/patient/" + patient.getId().toString();
+                                Log.i(LOG_TAG, "STP " + deleteURL);
+                                StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, deleteURL, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(getApplicationContext(), "Delete successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(getApplicationContext(), "Error in DELETE", Toast.LENGTH_LONG).show();
+                                        error.printStackTrace();
+                                    }
+                                });
+                                VolleyController.getInstance(getApplicationContext()).addToRequestQueue(deleteRequest);
+
+
                                 Intent mainIntent;
                                 mainIntent = new Intent(PatientActivity.this, OverviewActivity.class);
+                                mainIntent.putExtra("var", 4);
+                                Log.i(LOG_TAG, "STP " + mainIntent);
                                 PatientActivity.this.startActivity(mainIntent);
                                 PatientActivity.this.finish();
                             }
