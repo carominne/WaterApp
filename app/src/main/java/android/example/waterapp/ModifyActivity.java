@@ -43,7 +43,7 @@ public class ModifyActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        patient = intent.getParcelableExtra("com.example.mysampleapp.PATIENT");
+        patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
         this.updateTextViewForename(patient.getForename());
         this.updateTextViewLastname(patient.getName());
         this.updateTextViewDate(patient.getBirthday());
@@ -132,7 +132,9 @@ public class ModifyActivity extends AppCompatActivity {
     public void launchPatientActivityFromModif(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         Log.i(LOG_TAG, "allez " + patient.getGender() );
-        intent.putExtra(EXTRA_PATIENT, patient);
+        intent.putExtra("id", patient.getId());
+        intent.putExtra("button", patient.getButton());
+        //intent.putExtra(EXTRA_PATIENT, patient);
         startActivity(intent);
     }
 

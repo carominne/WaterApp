@@ -1,7 +1,9 @@
 package android.example.waterapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mMainUsername;
     private EditText mMainPassword;
     //private RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
+    private static final String LOG_TAG = "message";
 
 
     @Override
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
+        sharedResponse("");
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
@@ -66,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONArray response) {
                     resultTextView.setText("Response : " + response.toString());
+                   //Log.i(LOG_TAG, "coucou wtf: " + response.toString());
                     //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                    sharedResponse(response.toString());
 
                 }
             }, new Response.ErrorListener() {
@@ -82,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-//POST method
+
+
+/*//POST method
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 resultTextView.setText("Error posting");
             }
         });
-        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);*/
 
 
 
@@ -195,6 +203,14 @@ public class MainActivity extends AppCompatActivity {
 // Add a request (in this example, called stringRequest) to your RequestQueue.
 VolleyController.getInstance(this).addToRequestQueue(stringRequest);
 */
+
+    public void sharedResponse(String response) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        Log.i(LOG_TAG, "coucou00725: " + response);
+        editor.putString("Response", response);
+        editor.commit();
+    }
 
 
 

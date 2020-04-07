@@ -18,6 +18,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.time.LocalDate;
@@ -27,7 +37,7 @@ import java.util.Calendar;
 public class PatientActivity extends AppCompatActivity {
 
     public Patient patient;
-    public final static String EXTRA_PATIENT = "com.example.mysampleapp.PATIENT";
+    public final static String EXTRA_PATIENT = "com.example.myexampleapp.PATIENT";
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "test2";
     private String medication = "";
@@ -38,118 +48,156 @@ public class PatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-        Intent intent = getIntent();
-        patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
-        this.updateTextViewName(patient.getForename() + " "+ patient.getName());
-        this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
-        this.updateTextViewAge(String.valueOf(patient.getAge()));
-        this.updateTextViewRoom(String.valueOf(patient.getRoom()));
-        this.updateTextViewGender(patient.getGender());
-        this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
-        this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
-        this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
-        this.updateTextViewSize(String.valueOf(patient.getHeight()));
-        this.updateTextViewWeight(String.valueOf(patient.getWeight()));
-        this.updateTextViewHeartbeat(String.valueOf(patient.getHeartbeat()));
-        this.updateTextViewSpo(String.valueOf(patient.getSpo2()));
+        final Intent intent = getIntent();
+        Log.i(LOG_TAG, "coucou wtf: " + intent);
+      // patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
 
-    }
+        try {
+            final String get_singleURL = "http://10.0.2.2:8080/demo/patient/" + intent.getIntExtra("id",0); // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
+            Log.i(LOG_TAG, "coucou wtf: " + get_singleURL);
 
-    private void updateTextViewSpo(String spo) {
-        TextView textView = (TextView) findViewById(R.id.spo22);
-        textView.setText(spo);
-    }
+            JsonObjectRequest get_singleRequest = new JsonObjectRequest(Request.Method.GET,  get_singleURL , null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
 
-    private void updateTextViewHeartbeat(String heart) {
-        TextView textView = (TextView) findViewById(R.id.hearbeat2);
-        textView.setText(heart);
-    }
+                    Log.i(LOG_TAG, "coucou wtf: " + response.toString());
 
+                    //Log.i(LOG_TAG, "coucou wtf: " + response.toString());
+                    //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
+                   // sharedResponse(response.toString());
 
-    private void updateTextViewBirthday(String birthday) {
-        TextView textView = (TextView) findViewById(R.id.patient_birthday);
-        textView.setText(birthday);
-    }
+                    patient = new Gson().fromJson(String.valueOf(response), new TypeToken<Patient>() {
+                    }.getType());
 
-    private void updateTextViewWeight(String w) {
-        TextView textView = (TextView) findViewById(R.id.patient_weight);
-        textView.setText(w);
-    }
+                    patient.setButton( intent.getIntExtra("button",0));
 
-    private void updateTextViewSize(String size) {
-        TextView textView = (TextView) findViewById(R.id.patient_size);
-        textView.setText(size);
-    }
+                    this.updateTextViewName(patient.getForename() + " "+ patient.getName());
+                    this.updateTextViewBirthday(String.valueOf(patient.getBirthday()));
+                    this.updateTextViewAge(String.valueOf(patient.getAge()));
+                    this.updateTextViewRoom(String.valueOf(patient.getRoom()));
+                    this.updateTextViewGender(patient.getGender());
+                    this.updateTextViewDehydration(String.valueOf(patient.getDehydrationState()));
+                    this.updateTextViewDisease(String.valueOf(patient.getDisease1()));
+                    this.updateTextViewMedication(String.valueOf(patient.getMedication1()), String.valueOf(patient.getMedication2()), String.valueOf(patient.getMedication3()));
+                    this.updateTextViewSize(String.valueOf(patient.getHeight()));
+                    this.updateTextViewWeight(String.valueOf(patient.getWeight()));
+                    this.updateTextViewHeartbeat(String.valueOf(patient.getHeartbeat()));
+                    this.updateTextViewSpo(String.valueOf(patient.getSpo2()));
 
 
+                }
 
-    private void updateTextViewMedication(String med1, String med2, String med3) {
-        TextView textView = (TextView) findViewById(R.id.patient_medication);
-        Boolean x = med2.equals("1");
-        Log.i(LOG_TAG, "coucou" + x);
-        if (med1.equals("1")){
-            medication += "Medication 1\n";
+                private void updateTextViewSpo(String spo) {
+                    TextView textView = (TextView) findViewById(R.id.spo22);
+                    textView.setText(spo);
+                }
+
+                private void updateTextViewHeartbeat(String heart) {
+                    TextView textView = (TextView) findViewById(R.id.hearbeat2);
+                    textView.setText(heart);
+                }
+
+
+                private void updateTextViewBirthday(String birthday) {
+                    TextView textView = (TextView) findViewById(R.id.patient_birthday);
+                    textView.setText(birthday);
+                }
+
+                private void updateTextViewWeight(String w) {
+                    TextView textView = (TextView) findViewById(R.id.patient_weight);
+                    textView.setText(w);
+                }
+
+                private void updateTextViewSize(String size) {
+                    TextView textView = (TextView) findViewById(R.id.patient_size);
+                    textView.setText(size);
+                }
+
+
+
+                private void updateTextViewMedication(String med1, String med2, String med3) {
+                    TextView textView = (TextView) findViewById(R.id.patient_medication);
+                    Boolean x = med2.equals("1");
+                    Log.i(LOG_TAG, "coucou" + x);
+                    if (med1.equals("1")){
+                        medication += "Medication 1\n";
+                    }
+                    if (med2.equals("1")){
+                        Log.i(LOG_TAG, med2);
+                        medication += "Medication 2\n";
+                    }
+                    if (med3.equals("1")){
+                        medication += "Medication 3\n";
+                    }
+                    if (med2.equals("0") && med1.equals("0") && med3.equals("0")){
+                        medication += "No medication taken\n";
+                    }
+                    textView.setText(medication);
+                }
+
+                private void updateTextViewDisease(String dis1) {
+                    TextView textView = (TextView) findViewById(R.id.patient_background);
+                    String disease = "";
+
+                    if (dis1.equals("1")){
+                        disease += "Renal Failure\n";
+                    }
+                    if (dis1.equals("0")){
+                        disease += "No particular disease\n";
+                    }
+                    textView.setText(disease);
+                }
+
+                public void updateTextViewAge(String toThis) {
+                    TextView textView = (TextView) findViewById(R.id.patient_age);
+                    textView.setText(toThis);
+                }
+
+                public void updateTextViewName(String toThis) {
+                    TextView textView = (TextView) findViewById(R.id.patientName);
+                    textView.setText(toThis);
+                }
+
+                public void updateTextViewGender(String toThis) {
+                    TextView textView = (TextView) findViewById(R.id.patient_gender);
+                    textView.setText(toThis);
+                }
+
+
+                public void updateTextViewRoom(String toThis) {
+                    TextView textView = (TextView) findViewById(R.id.patient_room_number);
+                    textView.setText(toThis);
+                }
+
+                public void updateTextViewDehydration(String toThis){
+                    TextView textView = (TextView) findViewById(R.id.patient_dehydration_level);
+                    if (toThis.equals("0")) {
+                        textView.setText("Low");
+                    }
+                    if (toThis.equals("1")) {
+                        textView.setText("Medium");
+                    }
+                    if (toThis.equals("2")) {
+                        textView.setText("High");
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(get_singleRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (med2.equals("1")){
-            Log.i(LOG_TAG, med2);
-            medication += "Medication 2\n";
-        }
-        if (med3.equals("1")){
-            medication += "Medication 3\n";
-        }
-        if (med2.equals("0") && med1.equals("0") && med3.equals("0")){
-            medication += "No medication taken\n";
-        }
-        textView.setText(medication);
-    }
 
-    private void updateTextViewDisease(String dis1) {
-        TextView textView = (TextView) findViewById(R.id.patient_background);
-        String disease = "";
 
-        if (dis1.equals("1")){
-            disease += "Renal Failure\n";
-        }
-        if (dis1.equals("0")){
-            disease += "No particular disease\n";
-        }
-        textView.setText(disease);
-    }
-
-    public void updateTextViewAge(String toThis) {
-        TextView textView = (TextView) findViewById(R.id.patient_age);
-        textView.setText(toThis);
-    }
-
-    public void updateTextViewName(String toThis) {
-        TextView textView = (TextView) findViewById(R.id.patientName);
-        textView.setText(toThis);
-    }
-
-    public void updateTextViewGender(String toThis) {
-        TextView textView = (TextView) findViewById(R.id.patient_gender);
-        textView.setText(toThis);
     }
 
 
-    public void updateTextViewRoom(String toThis) {
-        TextView textView = (TextView) findViewById(R.id.patient_room_number);
-        textView.setText(toThis);
-    }
-
-    public void updateTextViewDehydration(String toThis) {
-        TextView textView = (TextView) findViewById(R.id.patient_dehydration_level);
-        if (toThis.equals("0")) {
-            textView.setText("Low");
-        }
-        if (toThis.equals("1")) {
-            textView.setText("Medium");
-        }
-        if (toThis.equals("2")) {
-            textView.setText("High");
-        }
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){

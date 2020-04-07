@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -43,6 +44,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = "message";
     public final static String EXTRA_PATIENT = "com.example.myexampleapp.PATIENT";
+    public String jpp ="";
   //  public String[] json = {
     //        "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'heartbeat' : 80, 'spo2' : 20, 'gender':'M','birthday':'02/04/1997', 'age' : 0,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'height':180 ,'weight' : 65}",
       //      "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'20/11/1998','age':0, 'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
@@ -73,28 +75,117 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
         setContentView(R.layout.activity_overview);
         layout = findViewById(R.id.layout_overview);
 
-        RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).
-                getRequestQueue();
+
 //   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
         // Formulate the request and handle the response.
         final String[] a = {""};
         JSONArray json2 = null;
+
+        request();
+
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        String mResponse = m.getString("Response", "");
+
+
+       Log.i(LOG_TAG, "coucou00788: " + mResponse);
+
+        String[] words = {};
+       if (mResponse.length() > 0) {
+           mResponse = mResponse.substring(1, mResponse.length() - 1);
+
+           String[] json = {};
+
+           String line = mResponse;
+           words = line.split("\\}\\,");
+
+           Log.i(LOG_TAG, "coucou00788: " + words[0]);
+
+
+           patients = new Patient[words.length];
+
+           for (int i = 0; i < words.length; i++) {
+
+               Log.i(LOG_TAG, "coucou0098: " + words[i] + "}");
+               Patient patient = null;
+               if (i == words.length - 1) {
+                   patient = new Gson().fromJson(words[i], new TypeToken<Patient>() {
+                   }.getType());
+               } else {
+                   patient = new Gson().fromJson(words[i] + "}", new TypeToken<Patient>() {
+                   }.getType());
+               }
+
+               patient.setButton(i);
+               patients[i] = patient;
+           }
+
+
+           pat = new ArrayList<>(Arrays.asList(patients));
+           Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
+           pat.sort(new SortedPatient());
+
+           LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400, 200);
+           params.setMargins(75, 48, 24, 24);
+
+
+           for (int i = 0; i < words.length; i++) {
+
+               final Button button = new Button(this);
+               int remainder = i % 2;
+               if (remainder == 0) {
+                   params.setMargins(75, 48, 24, 24);
+                   button.setLayoutParams(new LinearLayout.LayoutParams(params));
+               }
+               if (remainder == 1) {
+                   params.setMargins(554, -224, 75, 24);
+                   button.setLayoutParams(new LinearLayout.LayoutParams(params));
+               }
+
+
+               button.setId(pat.get(i).getButton());
+               button.setText(pat.get(i).getName() + " " + pat.get(i).getForename() + " :" + pat.get(i).getRoom());
+
+
+               if (pat.get(i).getDehydrationState().equals(0)) {
+                   button.setBackgroundColor(Color.GREEN);
+               }
+
+               if (pat.get(i).getDehydrationState().equals(1)) {
+                   button.setBackgroundColor(Color.YELLOW);
+                   Log.i(LOG_TAG, "red: " + pat.get(i).getDehydrationState());
+               }
+
+               if (pat.get(i).getDehydrationState().equals(2)) {
+                   button.setBackgroundColor(Color.RED);
+
+               }
+
+               button.setOnClickListener(this);
+
+
+               layout.addView(button);
+           }
+       }
+
+    }
+
+
+    public void request (){
         try {
             final String URL = "http://10.0.2.2:8080/demo/all"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
+
+
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
-                    Integer l = response.length();
-                   // Boolean okk = sharedResponse(response.toString());
-                    Log.i(LOG_TAG, "coucou0076: " + "length" + l);
 
+
+                    //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
                     sharedResponse(response.toString());
+                    Log.i(LOG_TAG, "coucou wtf2: " + response);
 
-
-
-
+                    jpp = response.toString();
 
                 }
             }, new Response.ErrorListener() {
@@ -104,123 +195,13 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
                     error.printStackTrace();
                 }
             });
-
-
-
-            //json2 = ssss.toString();
             VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        String mResponse = m.getString("Response", "");
-
-
-      //  Log.i(LOG_TAG, "coucou00788: " + mResponse);
-
-        mResponse = mResponse.substring(1,mResponse.length()-1);
-
-        String[] json = {};
-
-        String line = mResponse;
-        String[] words = line.split("\\}\\,");
-
-
-
-        Log.i(LOG_TAG, "coucou00788: " + words[0]);
-
-       /* int nel = 0;
-        String mm = "";
-        for (int i = 0; i<mResponse.length();i++)
-        {
-            char lp = mResponse.charAt(i);
-            if (l && mResponse[i-1] == "}" ){
-
-            }
-        }
-*/
-
-
-
-
-      //  mResponse.split("")
-
-     //   Gson g = new Gson();
-       // Patient p = g.fromJson(mResponse, Patient.class);
-
-    //    Log.i(LOG_TAG, "coucou0078: " + p);
-
-
-        patients = new Patient[words.length];
-
-        for (int i = 0; i< words.length; i++) {
-
-            Log.i(LOG_TAG, "coucou0098: " + words[i]+"}");
-            Patient patient = null;
-            if (i == words.length-1){
-                 patient = new Gson().fromJson(words[i], new TypeToken<Patient>() {
-                }.getType());
-            }
-
-            else {
-                 patient = new Gson().fromJson(words[i] + "}"     , new TypeToken<Patient>() {
-                }.getType());
-            }
-
-            patient.setButton(i);
-            patients[i] = patient;
-        }
-
-
-        pat = new ArrayList<>(Arrays.asList(patients));
-        Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
-        pat.sort(new SortedPatient());
-
-        LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(400, 200);
-        params.setMargins(75, 48, 24, 24);
-
-
-        for (int i = 0; i< words.length; i++) {
-
-            final Button button = new Button(this);
-            int remainder = i % 2;
-            if (remainder == 0){
-                params.setMargins(75, 48, 24, 24);
-                button.setLayoutParams(new LinearLayout.LayoutParams(params));
-            }
-            if (remainder == 1){
-                params.setMargins(554, -224, 75, 24);
-                button.setLayoutParams(new LinearLayout.LayoutParams(params));
-            }
-
-
-            button.setId(pat.get(i).getButton());
-            button.setText(pat.get(i).getName() + " " + pat.get(i).getForename() + " :" + pat.get(i).getRoom());
-
-
-            if (pat.get(i).getDehydrationState().equals(0)) {
-                button.setBackgroundColor(Color.GREEN);
-            }
-
-            if (pat.get(i).getDehydrationState().equals(1)) {
-                button.setBackgroundColor(Color.YELLOW);
-                Log.i(LOG_TAG, "red: " + pat.get(i).getDehydrationState());
-            }
-
-            if (pat.get(i).getDehydrationState().equals(2)) {
-                button.setBackgroundColor(Color.RED);
-
-            }
-
-            button.setOnClickListener(this);
-
-
-            layout.addView(button);
-        }
     }
+
 
 
     public void sharedResponse(String response) {
@@ -238,8 +219,10 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         @SuppressLint("ResourceType") int ind = view.getId();
-        intent.putExtra(EXTRA_PATIENT, pat.get(ind));
-        Log.i(LOG_TAG, "coucou0072: " + pat.get(ind));
+       // intent.putExtra(EXTRA_PATIENT, pat.get(ind));
+        intent.putExtra("id", pat.get(ind).getId());
+        intent.putExtra("button", ind);
+    //    Log.i(LOG_TAG, "coucou0072: " + pat.get(ind));
         startActivity(intent);
     }
 
