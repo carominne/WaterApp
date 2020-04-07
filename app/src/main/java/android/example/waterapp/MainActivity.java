@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 */
 
         //%%%%%%%%%%%%%%%%%%% POST request
+
         JSONObject postObject = new JSONObject();
         try {
             //input your API parameters
@@ -156,10 +157,11 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                resultTextView.setText("Error posting");
+                resultTextView.setText("Error POSTing");
             }
         });
         VolleyController.getInstance(getApplicationContext()).addToRequestQueue(postRequest);
+
 
 
         //%%%%%%%%%%%%% PUT request
@@ -185,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         final String putURL = "http://10.0.2.2:8080/demo/patientAll/23";
-        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, postURL, putObject,
+        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, putURL, putObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -225,9 +227,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }*/
-
-
-
 
 /* OPERATIONS AVEC LA REQUESTQUEUE
 // Get a RequestQueue
