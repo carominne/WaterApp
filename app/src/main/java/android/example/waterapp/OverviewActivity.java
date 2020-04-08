@@ -172,17 +172,20 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
                layout.addView(button);
            }
        }
-        final Intent intent = getIntent();
+
+
+         Intent intent = getIntent();
 
         if (intent.getIntExtra("var", 1)==4) {
             Log.i(LOG_TAG, "JE REDEMARRE");
            Intent i = new Intent(OverviewActivity.this, OverviewActivity.class);
-         //  finish();
+          //finish();
            overridePendingTransition(0, 0);
            startActivity(i);
            overridePendingTransition(0, 0);
 
        }
+
     }
 
 

@@ -130,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
         //%%%%%%%%%%%%%%%%%%% POST request
 
-        JSONObject postObject = new JSONObject();
+      /*  JSONObject postObject = new JSONObject();
         try {
             //input your API parameters
             postObject.put("id", "2");
-            postObject.put("roomNumber", 12);
+            postObject.put("roomr", 12);
             postObject.put("name", "testPOST");
             postObject.put("forename", "post");
             postObject.put("dehydrationState", 1);
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //resultTextView.setText("String Response : " + response.toString());
+                        resultTextView.setText("String Response : " + response.toString());
                         Toast.makeText(getApplicationContext(), "Post request sent !", Toast.LENGTH_LONG).show();
 
                     }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         VolleyController.getInstance(getApplicationContext()).addToRequestQueue(postRequest);
-
+*/
 
 
         //%%%%%%%%%%%%% PUT request

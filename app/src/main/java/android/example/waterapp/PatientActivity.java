@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -212,6 +213,7 @@ public class PatientActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -224,6 +226,72 @@ public class PatientActivity extends AppCompatActivity {
                 break;
             case R.id.action_stat:
                 Toast.makeText(this, "Need activity for statistics", Toast.LENGTH_LONG).show();
+
+               /* JSONObject postObject = new JSONObject();
+                try {
+                    //input your API parameter
+                    String b =  patient.getBirthday();
+                    String b2 = b.replace("\\", "");
+                    Log.i(LOG_TAG, "STP" + b2);
+
+
+                  //  postObject.put("id", patient.getId()+53);
+                    postObject.put("room", patient.getRoom());
+                    postObject.put("name", patient.getName());
+                    postObject.put("forename", patient.getForename());
+                    postObject.put("dehydrationState", patient.getDehydrationState());
+                    postObject.put("heartbeat", patient.getHeartbeat());
+                    postObject.put("spo2", patient.getSpo2());
+                    postObject.put("gender", patient.getGender());
+                    postObject.put("birthday", b2);
+                    postObject.put("age", patient.getAge());
+                    postObject.put("weight", patient.getWeight());
+                    postObject.put("height", patient.getHeight());
+                    postObject.put("medication1", patient.getMedication1());
+                    postObject.put("medication2", patient.getMedication2());
+                    postObject.put("medication3", patient.getMedication3());
+                    postObject.put("disease1", patient.getDisease1());
+*/
+
+
+                    /*postObject.put("id", patient.getId());
+                    postObject.put("room", patient.getRoom());
+                    postObject.put("name", patient.getName());
+                    postObject.put("forename", patient.getForename());
+                    postObject.put("dehydrationState", patient.getDehydrationState());
+                    postObject.put("heartbeat", patient.getHeartbeat());
+                    postObject.put("spo2", patient.getSpo2());
+                    postObject.put("gender", patient.getGender());
+                    postObject.put("birthday", patient.getBirthday());
+                    postObject.put("age", 12);
+                    postObject.put("weight", patient.getWeight());
+                    postObject.put("height", patient.getHeight());
+                    postObject.put("medication1", 1);
+                    postObject.put("medication2", 1);
+                    postObject.put("medication3", 1);
+                    postObject.put("disease1", 1);*/
+             /*   } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                final String postURL = "http://10.0.2.2:8080/demo/add";
+                JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, postURL, postObject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                Toast.makeText(getApplicationContext(), "Post request sent !", Toast.LENGTH_LONG).show();
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                VolleyController.getInstance(getApplicationContext()).addToRequestQueue(postRequest);*/
+
+
+
                 break;
             case R.id.action_back:
                 Intent intent2 = new Intent(this, OverviewActivity.class);
