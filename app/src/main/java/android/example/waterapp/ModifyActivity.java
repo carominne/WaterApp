@@ -251,6 +251,7 @@ public class ModifyActivity extends AppCompatActivity {
             putObject.put("height", mheight.getText().toString());
             putObject.put("medication1", m1);
             putObject.put("medication2", m2);
+            
             putObject.put("medication3", m3);
             putObject.put("disease1", d1);
         } catch (JSONException e) {

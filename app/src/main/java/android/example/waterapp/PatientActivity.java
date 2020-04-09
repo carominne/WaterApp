@@ -50,6 +50,7 @@ public class PatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
+
         final Intent intent = getIntent();
         Log.i(LOG_TAG, "coucou wtf: " + intent);
         // patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
