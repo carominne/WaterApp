@@ -85,8 +85,8 @@ public class AddActivity extends AppCompatActivity {
         mmale.setId(ID1);
         mfemale = findViewById(R.id.female);
         mfemale.setId(ID2);
-        mOther = findViewById(R.id.other);
-        mOther.setId(ID3);
+/*        mOther = findViewById(R.id.other);
+        mOther.setId(ID3);*/
         mbirthday = findViewById(R.id.date);
         mdisease1 = findViewById(R.id.disease1);
         mmedication1 = findViewById(R.id.med1);
@@ -232,9 +232,9 @@ public class AddActivity extends AppCompatActivity {
         if (i==ID2){
             return "F";
         }
-        if (i==ID3){
+/*        if (i==ID3){
             return "Other";
-        }
+        }*/
         return null;
     }
 

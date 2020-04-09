@@ -93,7 +93,7 @@ public class ModifyActivity extends AppCompatActivity {
         mgender = findViewById(R.id.radioGroup);
         mmale = findViewById(R.id.male);
         mfemale = findViewById(R.id.female);
-        mOther = findViewById(R.id.other);
+    //    mOther = findViewById(R.id.other);
         mdisease1 = findViewById(R.id.disease1);
         mmedication1 = findViewById(R.id.med1);
         mmedication2 = findViewById(R.id.med2);
@@ -129,8 +129,8 @@ public class ModifyActivity extends AppCompatActivity {
                 return "M";
             case  R.id.female:
                 return "F";
-            case  R.id.other:
-                return "Other";
+/*            case  R.id.other:
+                return "Other";*/
         }
         return null;
 
@@ -199,10 +199,10 @@ public class ModifyActivity extends AppCompatActivity {
             RadioButton radioButton = (RadioButton) findViewById(R.id.female);
             radioButton.setChecked(Boolean.parseBoolean("TRUE"));
         }
-        if (toThis.equals("Other")){
+       /* if (toThis.equals("Other")){
             RadioButton radioButton = (RadioButton) findViewById(R.id.other);
             radioButton.setChecked(Boolean.parseBoolean("TRUE"));
-        }
+        }*/
     }
 
 /*    private void updateTextViewDate(Integer toThis) {
@@ -261,7 +261,7 @@ public class ModifyActivity extends AppCompatActivity {
             }
             mmale.setId(ID1);
             mfemale.setId(ID2);
-            mOther.setId(ID3);
+        //    mOther.setId(ID3);
 
 
             putObject.put("room", mroom.getText());
