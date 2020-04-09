@@ -35,7 +35,7 @@
         android:text="Cancel"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:onClick="launchPatientActivityFromModif"/>
+        android:onClick="launchPatientActivityFromModifCancel"/>
 
     <ScrollView
         android:layout_width="match_parent"

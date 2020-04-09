@@ -92,11 +92,8 @@ public class ModifyActivity extends AppCompatActivity {
         mroom = (EditText) findViewById(R.id.room_number_text);
         mgender = findViewById(R.id.radioGroup);
         mmale = findViewById(R.id.male);
-        mmale.setId(ID1);
         mfemale = findViewById(R.id.female);
-        mfemale.setId(ID2);
         mOther = findViewById(R.id.other);
-        mOther.setId(ID3);
         mdisease1 = findViewById(R.id.disease1);
         mmedication1 = findViewById(R.id.med1);
         mmedication2 = findViewById(R.id.med2);
@@ -127,7 +124,17 @@ public class ModifyActivity extends AppCompatActivity {
         }
     }
     private String getSelectedGender(RadioGroup gender) {
-        Integer i = gender.getCheckedRadioButtonId();
+        switch (gender.getCheckedRadioButtonId()){
+            case R.id.male:
+                return "M";
+            case  R.id.female:
+                return "F";
+            case  R.id.other:
+                return "Other";
+        }
+        return null;
+
+        /*Integer i = gender.getCheckedRadioButtonId();
         Log.d("coucou", "coucou" + i);
         if (i==ID1){
             return "M";
@@ -138,7 +145,7 @@ public class ModifyActivity extends AppCompatActivity {
         if (i==ID3){
             return "Other";
         }
-        return null;
+        return null;*/
     }
 
     private void updateTextViewDate(String birthday) {
@@ -224,6 +231,16 @@ public class ModifyActivity extends AppCompatActivity {
 
     }
 
+    public void launchPatientActivityFromModifCancel(View view) {
+        Intent intent = new Intent(this, PatientActivity.class);
+        Log.i(LOG_TAG, "allez " + patient.getGender() );
+        intent.putExtra("id", patient.getId());
+        intent.putExtra("button", patient.getButton());
+        //intent.putExtra(EXTRA_PATIENT, patient);
+        startActivity(intent);
+
+    }
+
     private void putRequest() {
 
         JSONObject putObject = new JSONObject();
@@ -242,7 +259,12 @@ public class ModifyActivity extends AppCompatActivity {
             if (mdisease1 != null){
                 d1 = disCheck(mdisease1);
             }
-            putObject.put("roomNumber", mroom.getText());
+            mmale.setId(ID1);
+            mfemale.setId(ID2);
+            mOther.setId(ID3);
+
+
+            putObject.put("room", mroom.getText());
             putObject.put("name", mlastname.getText().toString());
             putObject.put("forename", mforename.getText().toString());
             putObject.put("gender", getSelectedGender(mgender));
@@ -263,7 +285,7 @@ public class ModifyActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         //resultTextView.setText("String Response : " + response.toString());
-                        Toast.makeText(getApplicationContext(), "PUT request sent !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Patient updated !", Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
