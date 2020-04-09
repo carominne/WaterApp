@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
        sharedResponse("");
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
+      //  final TextView resultTextView = (TextView) findViewById(R.id.textview_main);
 
 
 //   %%%%%%%%%%%%%%%  GET REQUEST for all patients (use of jsonArray)
