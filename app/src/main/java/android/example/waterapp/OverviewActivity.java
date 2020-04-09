@@ -264,7 +264,8 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
         int id = item.getItemId();
         switch(id){
             case R.id.action_settings:
-                Toast.makeText(this, "Need activity for settings", Toast.LENGTH_LONG).show();
+                Intent intent0 = new Intent(this, SettingsActivity.class);
+                startActivityForResult(intent0, TEXT_REQUEST);
                 break;
             case R.id.action_form:
                 Intent intent = new Intent(this, FeedbackActivity.class);
