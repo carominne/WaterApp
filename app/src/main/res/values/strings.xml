@@ -80,4 +80,40 @@
     <string name="feedback_form">Feedback Form</string>
     <string name="title_activity_modify">ModifyActivity</string>
     <string name="num3" />
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+
+    <string-array name="PatientOrder">
+        <item>By dehydration state</item>
+        <item>By alphabetical order by names</item>
+        <item>By number of room</item>
+
+    </string-array>
+
+    <string-array name="RefreshFrequency">
+        <item>10 min</item>
+        <item>20 min</item>
+        <item>40 min </item>
+        <item>1 hour </item>
+
+    </string-array>
+
+
 </resources>
