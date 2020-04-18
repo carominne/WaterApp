@@ -255,6 +255,7 @@ public class Patient implements Parcelable {
             return new Patient(in);
         }
 
+
         @Override
         public Patient[] newArray(int size) {
             return new Patient[size];
@@ -264,7 +265,6 @@ public class Patient implements Parcelable {
     public Patient(Parcel in) {
         id = in.readInt();
         room = in.readInt();
-
         name = in.readString();
         forename = in.readString();
         dehydrationState = in.readInt();

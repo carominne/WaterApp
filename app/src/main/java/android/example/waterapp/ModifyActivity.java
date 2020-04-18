@@ -50,6 +50,7 @@ public class ModifyActivity extends AppCompatActivity {
     private RadioButton mmale;
     private RadioButton mfemale;
     private RadioButton mOther;
+
     private EditText mbirthday;
     private CheckBox mdisease1;
     private CheckBox mmedication1;
