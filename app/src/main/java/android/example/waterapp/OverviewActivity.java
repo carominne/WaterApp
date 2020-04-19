@@ -233,8 +233,6 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
 
 
-
-
     public void launchPatientActivity(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         @SuppressLint("ResourceType") int ind = view.getId();
