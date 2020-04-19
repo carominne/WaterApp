@@ -3,6 +3,7 @@ package android.example.waterapp;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -30,6 +32,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,6 +54,7 @@ public class ModifyActivity extends AppCompatActivity {
     private RadioButton mmale;
     private RadioButton mfemale;
     private RadioButton mOther;
+
     private EditText mbirthday;
     private CheckBox mdisease1;
     private CheckBox mmedication1;
@@ -220,6 +225,18 @@ public class ModifyActivity extends AppCompatActivity {
         textInputEditText.setText(toThis);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Integer getAge(String birthday){
+        int year = Integer.parseInt(birthday.substring(6));
+        int day = Integer.parseInt(birthday.substring(0,2));
+        int month = Integer.parseInt(birthday.substring(3,5));
+        LocalDate today = LocalDate.now();
+        LocalDate birth = LocalDate.of(year, month, day);
+        Period p = Period.between(birth, today);
+        int age = p.getYears();
+        return age;
+    }
+
     public void launchPatientActivityFromModif(View view) {
         Intent intent = new Intent(this, PatientActivity.class);
         Log.i(LOG_TAG, "allez " + patient.getGender() );
@@ -241,6 +258,7 @@ public class ModifyActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void putRequest() {
 
         JSONObject putObject = new JSONObject();
@@ -269,6 +287,7 @@ public class ModifyActivity extends AppCompatActivity {
             putObject.put("forename", mforename.getText().toString());
             putObject.put("gender", getSelectedGender(mgender));
             putObject.put("birthday", mbirthday.getText().toString());
+            putObject.put("age", getAge(mbirthday.getText().toString()));
             putObject.put("weight", mweight.getText().toString());
             putObject.put("height", mheight.getText().toString());
             putObject.put("medication1", m1);

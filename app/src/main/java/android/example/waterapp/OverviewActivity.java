@@ -62,6 +62,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
             "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"*/
    // };
     public Patient[] patients = null;
+
     public ArrayList<Patient> pat ;
     public Integer nb_patient = 0;
 

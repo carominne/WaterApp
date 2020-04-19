@@ -2,6 +2,7 @@ package android.example.waterapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.example.waterapp.R;
@@ -13,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,6 +30,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -119,6 +123,21 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Integer getAge(String birthday){
+        int year = Integer.parseInt(birthday.substring(6));
+        int day = Integer.parseInt(birthday.substring(0,2));
+        int month = Integer.parseInt(birthday.substring(3,5));
+        LocalDate today = LocalDate.now();
+        LocalDate birth = LocalDate.of(year, month, day);
+        Period p = Period.between(birth, today);
+        int age = p.getYears();
+        return age;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void launchOverviewActivity_Add(View view) {
 
         EditText last = (EditText) findViewById(R.id.lastname_text);
@@ -165,6 +184,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void postRequest(){
 
         //%%%%%%%%%%%%%%%%%%% POST request
@@ -194,6 +214,7 @@ public class AddActivity extends AppCompatActivity {
             postObject.put("spo2", 0);
             postObject.put("gender", getSelectedGender(mgender));
             postObject.put("birthday", mbirthday.getText().toString());
+            postObject.put("age", getAge(mbirthday.getText().toString()));
             postObject.put("weight", mweight.getText());
             postObject.put("height", mheight.getText());
             postObject.put("medication1", m1);
