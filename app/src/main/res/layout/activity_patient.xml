@@ -110,7 +110,7 @@
                     android:layout_gravity="left"
                     android:layout_marginBottom="20dp"
                     android:layout_toLeftOf="@+id/patient_dehydration_level"
-                    android:text="SpO2"
+                    android:text="Total body water"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp"
                     android:textStyle="bold" />
