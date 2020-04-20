@@ -2,6 +2,9 @@ package android.example.waterapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -37,6 +40,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  View.OnClickListener {
 
@@ -46,28 +51,11 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
     public final static String EXTRA_PATIENT = "com.example.myexampleapp.PATIENT";
     public String jpp ="";
     public  String mResponse;
-    //  public String[] json = {
-    //        "{'id':7,'name':'Hu','forename':'Louis','dehydrationState':2,'heartbeat' : 80, 'spo2' : 20, 'gender':'M','birthday':'02/04/1997', 'age' : 0,'medication1':1,'medication2':1,'medication3':0,'disease1':0,'room':34, 'height':180 ,'weight' : 65}",
-      //      "{'id':7,'name':'Minne','forename':'Caro','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'20/11/1998','age':0, 'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-      //    "{'id':7,'name':'Grosfils','forename':'Amandine','dehydrationState':0,'heartbeat' : 80, 'spo2' : 20,'gender':'F','birthday':'30/07/1998','age' :0, 'medication1':1,'medication2':1,'medication3':1,'disease1':1,'room':26, 'height' : 173, 'weight': 58}",
-      //  "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-       //     "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'heartbeat' : 80, 'spo2' : 20,'gender':'F', 'birthday':'03/04/1997','age':0,'medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"
-/*            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}",
-            "{'id':7,'name':'Blabla','forename':'Click','dehydrationState':1,'gender':'F', 'birthday':'03.04.1997','medication1':0,'medication2':1,'medication3':1,'disease1':0,'room':12, 'height' : 175, 'weight': 58}"*/
-   // };
     public Patient[] patients = null;
-
     public ArrayList<Patient> pat ;
     public Integer nb_patient = 0;
 
-   // public VolleyCallback callback;
-
+    private boolean mIsPeriodicWorkScheduled = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
 
@@ -80,16 +68,13 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
 //   %%%%%%%%%%%%%%% JSONARRAY GET REQUEST
         // Formulate the request and handle the response.
-        final String[] a = {""};
-        JSONArray json2 = null;
+
 
         request();
 
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         mResponse = m.getString("Response", "");
 
-
-       Log.i(LOG_TAG, "coucou00788: " + mResponse);
 
         String[] words = {};
        if (mResponse.length() > 0) {
@@ -100,14 +85,12 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
            String line = mResponse;
            words = line.split("\\}\\,");
 
-           Log.i(LOG_TAG, "coucou00788: " + words[0]);
 
 
            patients = new Patient[words.length];
 
            for (int i = 0; i < words.length; i++) {
 
-               Log.i(LOG_TAG, "coucou0098: " + words[i] + "}");
                Patient patient = null;
                if (i == words.length - 1) {
                    patient = new Gson().fromJson(words[i], new TypeToken<Patient>() {
@@ -122,7 +105,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
 
            pat = new ArrayList<>(Arrays.asList(patients));
-           Log.i(LOG_TAG, "coucou: " + pat.get(0).getName());
+
            pat.sort(new SortedPatient());
 
            for (int i = 0; i < pat.size(); i++) {
@@ -187,7 +170,13 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
        }
 
+
+
     }
+
+
+
+
 
 
 
