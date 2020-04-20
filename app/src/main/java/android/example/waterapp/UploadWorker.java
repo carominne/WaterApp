@@ -3,6 +3,7 @@ package android.example.waterapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import android.annotation.SuppressLint;
@@ -43,7 +44,7 @@ import java.util.Arrays;
 
 import javax.xml.transform.Result;
 
-public class UploadWorker {
+public class UploadWorker extends Worker {
 
 
     public UploadWorker(
