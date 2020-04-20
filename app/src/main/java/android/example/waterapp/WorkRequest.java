@@ -53,8 +53,7 @@ public class WorkRequest {
 
 
 
-    periodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-            WorkRequest.class, 20, TimeUnit.MINUTES)
+    PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(WorkRequest.class, 20, TimeUnit.MINUTES)
             .build();
 
             WorkManager.getInstance().enqueue(PeriodicWorkRequest);
