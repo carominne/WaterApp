@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -34,6 +35,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class UploadWorker<context> extends Worker {
 
@@ -61,7 +65,7 @@ public class UploadWorker<context> extends Worker {
 
 
 
-    public Result doWork() {
+    public  Result doWork() {
 
         notif_text = "";
         request();
@@ -119,8 +123,8 @@ public class UploadWorker<context> extends Worker {
             int id = Integer.parseInt(new SimpleDateFormat("ddHHmmss", Locale.US).format(now));
 
             NotificationCompat.Builder builder2 = new NotificationCompat.Builder(((Context) context2).getApplicationContext(), "1")
-                    .setSmallIcon(R.drawable.ww)
-                    .setContentTitle("Dehydrated patient!")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentTitle("Dehydrated patient(s)!")
                     .setColor(ContextCompat.getColor((Context) context2, R.color.colorPrimary))
                     .setContentText(notif_text)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(notif_text))
@@ -129,8 +133,12 @@ public class UploadWorker<context> extends Worker {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(((Context) context2).getApplicationContext());
 
+
+
             notificationManager.notify(id , builder2.build());
-            Log.i(LOG_TAG, "JE NOTIFIE" + " " + notif_text);
+
+
+
             Log.i(LOG_TAG, "JE NOTIFIE2" + " " + mResponse);
         }
 
@@ -153,7 +161,6 @@ public class UploadWorker<context> extends Worker {
 
                     //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
                     sharedResponse(response.toString());
-                    Log.i(LOG_TAG, "automatique: " + response);
 
                     jpp = response.toString();
 
