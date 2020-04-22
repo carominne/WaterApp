@@ -68,35 +68,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(LOG_TAG, "JE NOTIFIE3" );
 
 
-        createNotificationChannel();
 
-
-
-/*        if(!isWorkScheduled(TAG_MY_WORK)) { // check if your work is not already scheduled
-            Log.i(LOG_TAG, "JE NOTIFIE que j'ajoute le work" );
-            scheduleWork(TAG_MY_WORK); // schedule your work
-        }*/
-         
 
 
 }
 
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "channel";
-            String description = "description";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
 
     public void sharedResponse(String response) {
