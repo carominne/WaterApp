@@ -85,7 +85,6 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         mResponse = m.getString("Response", "");
 
-
         String[] words = {};
        if (mResponse.length() > 0) {
            mResponse = mResponse.substring(1, mResponse.length() - 1);
@@ -94,7 +93,6 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
            String line = mResponse;
            words = line.split("\\}\\,");
-
 
 
            patients = new Patient[words.length];
@@ -129,6 +127,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
 
 
            for (int i = 0; i < words.length; i++) {
+
 
                final Button button = new Button(this);
                int remainder = i % 2;

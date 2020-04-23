@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -23,9 +25,17 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,11 +56,12 @@ public class MainActivity extends AppCompatActivity {
             "com.example.android.twoactivities.extra.PASSWORD_KEY";
     private EditText mMainUsername;
     private EditText mMainPassword;
+    public String file  ="";
     //private RequestQueue requestQueue = VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
     private static final String LOG_TAG = "message";
 
-
     public static final String TAG_MY_WORK = "mywork";
+    public User[] users = null;
 
 
 
@@ -63,10 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         mMainUsername = findViewById(R.id.editText_username);
         mMainPassword = findViewById(R.id.editText_password);
-       sharedResponse("");
+        sharedResponse("");
 
         Log.i(LOG_TAG, "JE NOTIFIE3" );
-
 
         createNotificationChannel();
 
@@ -80,6 +90,91 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
+    private void request() {
+
+        try {
+            final String get_singleURL = "http://10.0.2.2:8080/demo/allUser"; // il faut mettre 10.0.2.2 pour avoir localhost dans l'émulateur andoid : http://10.0.2.2:8080/demo/all
+            Log.i(LOG_TAG, "coucou wtf: " + get_singleURL);
+
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, get_singleURL, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    Log.i(LOG_TAG, "coucou wtf: " + response.toString());
+                    boolean credentials;
+                    credentials = false;
+                    String username = mMainUsername.getText().toString();
+                    String password = mMainPassword.getText().toString();
+                    String[] words = {};
+                    Log.i(LOG_TAG, "coucou toi" + mMainPassword + mMainUsername);
+                    Log.i(LOG_TAG, "coucou toi2" + response.length());
+                    if (response.length() > 0) {
+                        Log.i(LOG_TAG, "coucou toi2" + response.toString().length());
+                        String res = response.toString().substring(1, response.toString().length() - 1);
+
+                        Log.i(LOG_TAG, "coucou toi2" + res);
+
+                        String[] json = {};
+
+                        String line = res.toString();
+                        words = line.split("\\}\\,");
+                        Log.i(LOG_TAG, "coucou toi4" + words.length);
+
+                        users = new User[words.length];
+
+                        for (int i = 0; i < words.length; i++) {
+
+                            User patient = null;
+                            if (i == words.length - 1) {
+                                patient = new Gson().fromJson(words[i], new TypeToken<User>() {
+                                }.getType());
+
+                            } else {
+                                patient = new Gson().fromJson(words[i] + "}", new TypeToken<User>() {
+                                }.getType());
+                            }
+
+                            users[i] = patient;
+                        }
+                        for (int i = 0; i < words.length; i++){
+                            Log.i(LOG_TAG, "coucou toi4" + username);
+                            Log.i(LOG_TAG, "coucou toi4" + users[i].getIdentifier());
+
+
+                            if ((username.equals(users[i].getIdentifier()) && (password.equals(users[i].getPassword())))) {
+                                credentials = true;
+                                Log.i(LOG_TAG, "coucou toi5" + password);
+                                Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
+                                intent.putExtra("var", 4);
+                                MainActivity.this.startActivity(intent);
+                                // vérifications des données, si c'est juste, on met credentials à 1
+                            }
+                            else if(!(credentials)){
+                                Toast.makeText(getApplicationContext(), "This password / username is not in the database. Please try again.", Toast.LENGTH_LONG).show();
+
+                            }
+
+                        }
+                    }
+
+                    //Log.i(LOG_TAG, "coucou wtf: " + response.toString());
+                    // sharedResponse(response.toString());
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+            VolleyController.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void createNotificationChannel() {
@@ -130,22 +225,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    public void verifycredentials(View view) {
-        // insérer ici le code qui sert à vérifier les données d'identification entrées par l'utilisateur
-        boolean credentials;
-        credentials = false;
-        String username = mMainUsername.getText().toString();
-        String password = mMainPassword.getText().toString();
-
-        if (true) {
-            credentials = true; // vérifications des données, si c'est juste, on met credentials à 1
-        }
-        if (credentials == true) {
-            Intent intent = new Intent(this, OverviewActivity.class);
-            intent.putExtra("var", 4);
-            MainActivity.this.startActivity(intent);
-        }
-    }
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    public void verifycredentials(View view){
+        request();
+
+    }
+
 
 }
