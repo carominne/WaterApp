@@ -23,12 +23,8 @@
         android:orderInCategory="100"
         android:title="Back"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_deconnect"
-        android:icon="@android:drawable/btn_dialog"
-        android:orderInCategory="100"
-        android:title="Deconnect"
-        app:showAsAction="always" />
+
+
     <item
         android:id="@+id/action_modifiy"
         android:orderInCategory="100"
@@ -46,6 +42,20 @@
         android:orderInCategory="100"
         android:title="Add a new patient"
         />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:orderInCategory="100"
+        android:title="Refresh"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_deconnect"
+        android:icon="@android:drawable/btn_dialog"
+        android:orderInCategory="100"
+        android:title="Deconnect"
+        app:showAsAction="always" />
 
 
 </menu>

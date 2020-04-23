@@ -122,7 +122,7 @@ public class UploadWorker<context> extends Worker {
             String id_text = new SimpleDateFormat("ddHHmmss", Locale.US).format(now);
             int id = Integer.parseInt(new SimpleDateFormat("ddHHmmss", Locale.US).format(now));
 
-            NotificationCompat.Builder builder2 = new NotificationCompat.Builder(((Context) context2).getApplicationContext(), "1")
+            NotificationCompat.Builder builder2 = new NotificationCompat.Builder(((Context) context2).getApplicationContext(), "2")
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentTitle("Dehydrated patient(s)!")
                     .setColor(ContextCompat.getColor((Context) context2, R.color.colorPrimary))

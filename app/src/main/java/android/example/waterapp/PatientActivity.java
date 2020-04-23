@@ -52,7 +52,6 @@ public class PatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient);
 
         final Intent intent = getIntent();
-        Log.i(LOG_TAG, "coucou wtf: " + intent);
         // patient = intent.getParcelableExtra("com.example.myexampleapp.PATIENT");
 
         try {
@@ -207,10 +206,11 @@ public class PatientActivity extends AppCompatActivity {
         menu.getItem(1).setVisible(false);
         menu.getItem(2).setVisible(true);
         menu.getItem(3).setVisible(true);
-        menu.getItem(4).setVisible(false);
+        menu.getItem(4).setVisible(true);
         menu.getItem(5).setVisible(true);
-        menu.getItem(6).setVisible(true);
-        menu.getItem(7).setVisible(false);
+        menu.getItem(6).setVisible(false);
+        menu.getItem(7).setVisible(true);
+        menu.getItem(8).setVisible(false);
         return true;
     }
 
@@ -344,6 +344,14 @@ public class PatientActivity extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                break;
+            case R.id.action_refresh:
+                Intent i = new Intent(PatientActivity.this, PatientActivity.class);
+                i.putExtra("id", patient.getId());
+                i.putExtra("button", patient.getButton());
+                overridePendingTransition(0, 0);
+                startActivity(i);
+                overridePendingTransition(0, 0);
 
         }
         return true;
