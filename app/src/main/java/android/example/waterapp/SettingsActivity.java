@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity  implements  AdapterView
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter2);
         spinner2.setOnItemSelectedListener( this);
-        spinner.setPrompt("Frequency of refresh");
+        spinner2.setPrompt("Frequency of refresh");
     }
 
 
@@ -57,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity  implements  AdapterView
         menu.getItem(5).setVisible(false);
         menu.getItem(6).setVisible(false);
         menu.getItem(7).setVisible(false);
+        menu.getItem(8).setVisible(false);
         return true;
     }
     @Override

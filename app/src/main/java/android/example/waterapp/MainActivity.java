@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -130,25 +131,38 @@ public class MainActivity extends AppCompatActivity {
 
                             users[i] = patient;
                         }
+
+                        credentials = false;
                         for (int i = 0; i < words.length; i++){
                             Log.i(LOG_TAG, "coucou toi4" + username);
                             Log.i(LOG_TAG, "coucou toi4" + users[i].getIdentifier());
 
 
-                            if ((username.equals(users[i].getIdentifier()) && (password.equals(users[i].getPassword())))) {
-                                credentials = true;
+
+                            if ((username.equals(users[i].getIdentifier()))){
+                                if (password.equals(users[i].getPassword())){
+                                   credentials = true;
+                                }
+                            }
+
+
+
+                            if (credentials){
+
                                 Log.i(LOG_TAG, "coucou toi5" + password);
+
                                 Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
                                 intent.putExtra("var", 4);
                                 intent.putExtra("enter", credentials);
                                 MainActivity.this.startActivity(intent);
+
                                 // vérifications des données, si c'est juste, on met credentials à 1
-                            }
-                            else if(!(credentials)){
-                                Toast.makeText(getApplicationContext(), "This password / username is not in the database. Please try again.", Toast.LENGTH_LONG).show();
 
                             }
 
+                        }
+                        if (!credentials){
+                            Toast.makeText(getApplicationContext(), "This password / username is not in the database. Please try again.", Toast.LENGTH_LONG).show();
                         }
                     }
 
