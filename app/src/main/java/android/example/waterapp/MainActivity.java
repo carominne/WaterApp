@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
                                 Log.i(LOG_TAG, "coucou toi5" + password);
                                 Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
                                 intent.putExtra("var", 4);
-                                intent.putExtra("enter", credentials);
                                 MainActivity.this.startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "Welcome!", Toast.LENGTH_LONG).show();
                                 // vérifications des données, si c'est juste, on met credentials à 1
                             }
-                            else if(!(credentials)){
-                                Toast.makeText(getApplicationContext(), "This password / username is not in the database. Please try again.", Toast.LENGTH_LONG).show();
+                            else if (!(credentials)) {
+                                Toast.makeText(getApplicationContext(), "This password / username is not in the database. Please try again.", Toast.LENGTH_SHORT).show();
 
                             }
 

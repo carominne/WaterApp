@@ -54,6 +54,7 @@ public class OverviewActivity<jsonArray> extends AppCompatActivity  implements  
     public Patient[] patients = null;
     public ArrayList<Patient> pat ;
     public Integer nb_patient = 0;
+    public boolean credentials = true;
 
     private boolean mIsPeriodicWorkScheduled = false;
 
