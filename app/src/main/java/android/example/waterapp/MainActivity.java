@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(LOG_TAG, "coucou wtf: " + response.toString());
                     boolean credentials;
                     credentials = false;
+                    boolean enter = false;
                     String username = mMainUsername.getText().toString();
                     String password = mMainPassword.getText().toString();
                     String[] words = {};
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                 Log.i(LOG_TAG, "coucou toi5" + password);
                                 Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
                                 intent.putExtra("var", 4);
+                                intent.putExtra("enter", credentials);
                                 MainActivity.this.startActivity(intent);
                                 // vérifications des données, si c'est juste, on met credentials à 1
                             }
