@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
                                 intent.putExtra("var", 4);
-                                intent.putExtra("enter", credentials);
                                 MainActivity.this.startActivity(intent);
 
                                 // vérifications des données, si c'est juste, on met credentials à 1
